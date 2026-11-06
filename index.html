@@ -519,12 +519,17 @@ class Component extends DCLogic {
     const mobile = this.state.mobile;
     const anual = (this.state.billing ?? this.props.cobranca) === 'anual';
     const phone = (this.props.whatsapp ?? '5531984992474').replace(/\D/g, '');
+    const ua = navigator.userAgent;
+    const handheld = /Android|iPhone|iPad|iPod|Mobile/i.test(ua) || (/Mac/.test(ua) && navigator.maxTouchPoints > 1);
     const msg = encodeURIComponent('Olá! Vim pelo site da Sava e quero falar com um especialista.');
     const price = (m) => anual ? Math.round(m * 0.85) : m;
     const dark = { bg: '#0f1e2e', fg: '#f4f1ea', border: 'rgba(201,169,97,.5)', btnBg: '#c9a961', btnFg: '#0f1e2e', btnBorder: '#c9a961' };
     const light = { bg: '#f4f1ea', fg: '#0f1e2e', border: 'rgba(15,30,46,.15)', btnBg: 'transparent', btnFg: '#0f1e2e', btnBorder: '#0f1e2e' };
     return {
-      whatsapp: `https://wa.me/${phone}?text=${msg}`,
+      // No celular o wa.me abre o app direto. No computador, ir direto ao WhatsApp Web:
+      // a página intermediária do wa.me, quando o Web já está aberto em outra aba, só foca
+      // essa aba e perde a conversa. Com a URL /send o próprio Web abre o chat da SAVA.
+      whatsapp: handheld ? `https://wa.me/${phone}?text=${msg}` : `https://web.whatsapp.com/send?phone=${phone}&text=${msg}&type=phone_number&app_absent=0`,
       isDesktop: !mobile, isMobile: mobile, menuOpen: mobile && this.state.menuOpen,
       navCta: mobile ? 'WhatsApp' : 'Falar no WhatsApp',
       toggleMenu: () => this.setState(s => ({ menuOpen: !s.menuOpen })),
