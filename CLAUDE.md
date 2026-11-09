@@ -13,3 +13,10 @@ normais na sessão de 05/11 (cópia e histórico em `lina-code`, pasta `sava/sit
 - **Nunca** vai pro git: segredo e credencial, `node_modules`, saída gerada e dado real de cliente.
 - Pedir confirmação só antes de force-push, reescrever histórico, apagar branch, ou trocar o `CNAME`.
 - A versão completa está no repositório `Pedrobonanno1/claude-config`.
+
+## Páginas legais
+
+Privacidade, termos e exclusão de conta moram no domínio do app (app.savatecnologia.com.br/privacidade,
+/termos, /excluir-conta), que é o endereço cadastrado na App Store. Aqui os arquivos `privacidade.html`,
+`termos.html` e `excluir-conta.html` só redirecionam pra lá (o GitHub Pages não faz 301; é refresh +
+canonical). Não recriar o texto aqui: duas versões no ar foi exatamente o que se quis evitar (09/11/2026).
