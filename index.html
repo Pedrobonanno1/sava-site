@@ -228,7 +228,7 @@ h3:not(.app-real *) { font-size: var(--t-card); line-height: 1.2; }
 /* Grafite, a partir do --bezel dos mockups do app: o aparelho é moldura, quem tem cor é a tela. */
 .camada {
   position: absolute; inset: 0; border-radius: var(--r);
-  background: linear-gradient(90deg, #2b2d27, #6a6d62 14%, #35372f 30%, #8b8e82 52%, #2f312a 76%, #565950);
+  background: linear-gradient(90deg, #5a5041, #cdbb95 14%, #7d7160 30%, #e3d4ae 52%, #776a52 76%, #b5a480); /* champanhe, como na lp (11/11/2026) */
   transform: translateZ(var(--z));
 }
 .frente, .costas { position: absolute; inset: 0; border-radius: var(--r); -webkit-backface-visibility: hidden; backface-visibility: hidden; }
@@ -269,13 +269,18 @@ h3:not(.app-real *) { font-size: var(--t-card); line-height: 1.2; }
 .chamada-app .olho { margin-bottom: 6px; }
 .chamada-titulo { font-family: var(--serif); font-weight: 500; font-size: clamp(24px, 2.6vw, 32px); line-height: 1.1; text-wrap: balance; }
 .seta-baixo { width: 22px; height: 36px; margin: 10px auto 0; color: var(--sage); }
-.mao { position: absolute; z-index: 9; left: 0; top: 0; width: 64px; height: 64px; pointer-events: none; filter: drop-shadow(0 10px 18px rgba(35,38,32,.35)); opacity: 0; transition: opacity .35s; }
-.mao.aponta { opacity: 1; }
-.mao svg { width: 100%; height: 100%; display: block; }
-.mao .onda { position: absolute; left: 28px; top: 11px; width: 12px; height: 12px; margin: -6px; border-radius: 50%; border: 2px solid var(--sage-light); opacity: 0; animation: onda 2.4s ease-out infinite .3s; }
-.mao .onda.o2 { animation-delay: .55s; }
-@keyframes onda { 0% { transform: scale(.6); opacity: 0; } 8% { opacity: .95; } 100% { transform: scale(7); opacity: 0; } }
-.demo.usado .chamada-app, .demo.usado .mao { opacity: 0; pointer-events: none; }
+/* Os anéis dourados pulsando em volta do aparelho, como na lp (Pedro, 11/11/2026: "essas margens brilhando nessa
+   mesma cor"). A mão sobre o botão saiu no mesmo dia. */
+.anel {
+  position: absolute; left: 50%; top: 0; width: 344px; height: 724px; margin-left: -172px; transform: scale(var(--k)); transform-origin: 50% 0;
+  pointer-events: none; z-index: 7; transition: opacity .4s;
+}
+.anel::before, .anel::after { content: ""; position: absolute; inset: -16px; border-radius: 74px; border: 2.5px solid #D9BC82; box-shadow: 0 0 24px rgba(201,169,97,.7), inset 0 0 14px rgba(201,169,97,.4); animation: ping 2.4s ease-out infinite; }
+/* O dourado da lp (amber-light) foi feito pro fundo escuro; no creme ele some, então o traço é um tom acima e o halo
+   mais forte, pra continuar lendo como "brilhando". */
+.anel::after { animation-delay: 1.2s; }
+@keyframes ping { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(1.07); opacity: 0; } }
+.demo.usado .chamada-app, .demo.usado .anel { opacity: 0; pointer-events: none; }
 .demo.usado .chamada-app { visibility: hidden; }
 /* ---------------------------------------------------------------- o iPhone bloqueado */
 /* A feature principal numa cena: a nota sai sem abrir o app. O aparelho fica na tela de bloqueio e a nota inteira
@@ -929,19 +934,16 @@ main:focus { outline: none; }
       </div>
 
       <div class="demo" id="demo">
-        <!-- O convite (Pedro, 22/10: "algo bem maior mostrando que a tela é interativa"): o título em cima e a mão
-             apontando o botão da notificação, com a onda saindo do dedo. No fim da cena, o título vira o desfecho. -->
+        <!-- O convite (Pedro, 22/10: "algo bem maior mostrando que a tela é interativa"): o título em cima e os anéis
+             dourados pulsando em volta do aparelho (11/11). No fim da cena, o título vira o desfecho. -->
         <div class="chamada-app" aria-hidden="true">
           <span class="olho">Demonstração interativa</span>
-          <p class="chamada-titulo">A nota sai <span class="luz">sem abrir o app</span></p>
+          <p class="chamada-titulo">Toque na tela e <span class="luz">use o app</span></p>
           <svg class="seta-baixo" viewBox="0 0 24 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v34M4 28l8 8 8-8"/></svg>
         </div>
         <div class="palco3d" id="palco3d" role="img" aria-label="Um iPhone bloqueado recebe da SAVA, pelo WhatsApp, a nota do plantão que o hospital pediu, pronta pra conferir. A médica confere, toca em Emitir a nota e a nota autorizada chega, sem destravar o celular. Depois dá pra abrir o app e usar, e arrastar pra girar o aparelho.">
           <div class="sombra-fone" aria-hidden="true"></div>
-          <div class="mao" aria-hidden="true">
-            <i class="onda"></i><i class="onda o2"></i>
-            <svg viewBox="0 0 24 24" fill="#F7F5EF" stroke="#23261F" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11.5V5.5a1.5 1.5 0 0 1 3 0v5m0-1a1.5 1.5 0 0 1 3 0v1.5m0-.5a1.5 1.5 0 0 1 3 0V13a7 7 0 0 1-7 7h-.6a5 5 0 0 1-4.3-2.4L4 14.5a1.6 1.6 0 0 1 2.6-1.8L9 15"/></svg>
-          </div>
+          <div class="anel" aria-hidden="true"></div>
           <div class="escala">
             <div class="iphone" id="iphone" aria-hidden="true">
               <div class="camada" style="--z:-7px"></div><div class="camada" style="--z:-6px"></div><div class="camada" style="--z:-5px"></div><div class="camada" style="--z:-4px"></div>
@@ -1712,14 +1714,14 @@ de emitir</h1><div class="summary-card"><div class="summary-row"><div class="k">
      a proposta "Confere a nota:", a entrega "Sua nota … foi autorizada"), no ponto do plano em que o hospital escreve
      direto pro e-mail da SAVA. Quem não tocar vê a cena andar sozinha; destravar abre o app real, com a nota na lista. */
   const celularBloqueado = (() => {
-    const tela = $('#bloqueio'), pilha = $('#pilha'), abrir = $('#abrirApp'), mao = $('.mao'), palco = $('#palco3d')
+    const tela = $('#bloqueio'), pilha = $('#pilha'), abrir = $('#abrirApp'), palco = $('#palco3d')
     const titulo = $('.chamada-titulo'), TITULO = titulo.innerHTML
     const ZAP = '<svg viewBox="0 0 24 24" width="8" height="8" fill="#fff" aria-hidden="true"><path d="M12 2.5a9.5 9.5 0 0 0-8.2 14.3L2.5 21.5l4.8-1.3A9.5 9.5 0 1 0 12 2.5z"/></svg>'
     const FAISCA = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0c.8 6.6 5.4 11.2 12 12-6.6.8-11.2 5.4-12 12-.8-6.6-5.4-11.2-12-12C6.6 11.2 11.2 6.6 12 0z" fill="#E3C692"/></svg>'
     const cab = (avatar) => `<div class="notif-cab">${avatar}<span class="notif-quem">SAVA<small>WhatsApp</small></span><span class="notif-hora">agora</span></div>`
     const DA_SAVA = `<span class="notif-av">S<i class="zap">${ZAP}</i></span>`
     const NOTA = { h: 'santa-casa', v: 4200, dias: ['2026-10-19'] }
-    let etapa = 0, tocou = false, timers = [], motor = null, alvoMao = null
+    let etapa = 0, tocou = false, timers = [], motor = null
 
     const depois = (ms, f) => timers.push(setTimeout(f, quieto ? 0 : ms))
     const frente = () => { mexeuNoApp = performance.now(); acordarFone() }
@@ -1730,19 +1732,6 @@ de emitir</h1><div class="summary-card"><div class="summary-row"><div class="k">
     }
     function recolher(n) { if (n.classList.contains('recolhida')) return; n.classList.add('recolhida'); n.querySelector('.notif-txt').textContent = n.dataset.resumo }
 
-    /* A mão aponta o botão da vez. A posição sai do próprio botão (o aparelho gira), medida depois que ele vira de frente. */
-    function posicionar() {
-      if (!alvoMao) return
-      const p = palco.getBoundingClientRect(), b = alvoMao.getBoundingClientRect()
-      mao.style.left = (b.left - p.left + b.width * .62 - 28) + 'px'
-      mao.style.top = (b.top - p.top + b.height * .5 - 11) + 'px'
-    }
-    function apontar(botao) {
-      alvoMao = botao; mao.classList.remove('aponta')
-      setTimeout(() => { if (alvoMao === botao && etapa < 4) { posicionar(); mao.classList.add('aponta') } }, quieto ? 0 : 700)
-    }
-    const soltarMao = () => { alvoMao = null; mao.classList.remove('aponta') }
-    window.addEventListener('resize', posicionar)
     /* Sem ninguém tocar, a cena anda sozinha: o botão afunda como num toque e segue. */
     const sozinho = (botao, f) => { botao.classList.add('apertado'); setTimeout(() => { botao.classList.remove('apertado'); f() }, 220) }
 
@@ -1751,12 +1740,11 @@ de emitir</h1><div class="summary-card"><div class="summary-row"><div class="k">
       const n = notificar(`${cab(DA_SAVA)}<p class="notif-txt">Olá, Ana! O <b>Hospital Santa Casa</b> mandou a escala de outubro pro seu e-mail da SAVA. Encontrei nela 1 nota para emitir. Nada é emitido sem a sua confirmação.</p><div class="notif-botoes"><button type="button" data-acao="conferir">Conferir</button></div>`,
         'Hospital Santa Casa: 1 nota da escala de outubro para emitir.')
       const b = n.querySelector('[data-acao=conferir]')
-      apontar(b)
       if (!quieto) depois(5200, () => { if (!tocou && etapa === 1) sozinho(b, conferir) })
     }
     function conferir() {
       if (etapa !== 1) return
-      etapa = 2; soltarMao(); frente()
+      etapa = 2; frente()
       pilha.querySelector('[data-acao=conferir]').disabled = true
       depois(650, () => {
         pilha.querySelectorAll('.notif').forEach(recolher)
@@ -1766,13 +1754,12 @@ de emitir</h1><div class="summary-card"><div class="summary-row"><div class="k">
           <div class="notif-botoes"><button type="button" data-acao="emitir">Emitir a nota</button><button type="button" class="fantasma" data-acao="corrigir">Corrigir</button></div>`,
           'Confere a nota: Hospital Santa Casa · R$ 4.200,00')
         const b = n.querySelector('[data-acao=emitir]')
-        apontar(b)
         if (!quieto) depois(5600, () => { if (!tocou && etapa === 2) sozinho(b, emitir) })
       })
     }
     function emitir() {
       if (etapa !== 2) return
-      etapa = 3; soltarMao(); frente()
+      etapa = 3; frente()
       pilha.querySelectorAll('.notif button').forEach((b) => { b.disabled = true })
       const espera = document.createElement('div')
       espera.className = 'bloq-espera'; espera.setAttribute('role', 'status')
@@ -1798,7 +1785,7 @@ de emitir</h1><div class="summary-card"><div class="summary-row"><div class="k">
     }
     /* Destravar: o app real por baixo, com a nota da conversa já na lista (ou a revisão aberta, no "Corrigir"). */
     function destravar(corrigir) {
-      etapa = 5; soltarMao(); timers.forEach(clearTimeout)
+      etapa = 5; timers.forEach(clearTimeout)
       tela.classList.add('destravado'); demo.classList.add('usado')
       if (corrigir) telasDoApp.corrigirNoApp(NOTA)
       else telasDoApp.notaDaConversa(NOTA)
@@ -1818,7 +1805,7 @@ de emitir</h1><div class="summary-card"><div class="summary-row"><div class="k">
     function recomecar() {
       timers.forEach(clearTimeout); timers = []
       motor?.destruir(); motor = null
-      etapa = 0; tocou = false; soltarMao()
+      etapa = 0; tocou = false;
       pilha.replaceChildren(); abrir.hidden = true; titulo.innerHTML = TITULO
       tela.classList.remove('destravado')
       depois(700, chegaOPedido)
