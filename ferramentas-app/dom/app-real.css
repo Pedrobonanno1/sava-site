@@ -1,0 +1,290 @@
+/* As telas REAIS do app (main 381f5bc): as regras que elas usam, tiradas do bundle de
+   produção na ordem dele, com escopo .app-real pra não vazarem pra landing. Gerado por montar-telas.mjs; não editar à mão. */
+.app-real { --cream: #F7F5EF; --cream-deep: #ECE8DC; --fill: #EFEDE4; --ink: #23261F; --ink-soft: #787C6C; --sage: #75886A; --sage-deep: #333D2B; --sage-tint: #E4E9DA; --steel: #6E8291; --steel-deep: #3C4C58; --steel-tint: #E2E9EE; --dune: #8A7B63; --dune-tint: #EDE7DB; --rose: #A97583; --rose-deep: #6E4653; --rose-tint: #F0E2E6; --amber: #B98A44; --amber-deep: #7A5A2A; --amber-tint: #F6EBD7; --amber-light: #E3C692; --white: #FFFFFF; --serif: "Iowan Old Style", "Palatino Linotype", Georgia, serif; --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+.app-real { --nav-inactive: #A9AC9D; --bezel: #1c1e18; --on-room-btn: #2E2413; --room-ink-dim: rgba(247, 245, 239, .5); --room-ink-dim-label: rgba(247, 245, 239, .55); --shadow-nav: 0 10px 31px rgba(35, 38, 32, .14); --shadow-btn: 0 10px 31px rgba(35, 38, 32, .22); --shadow-phone: 0 39px 78px -26px rgba(35, 38, 32, .35); --dim: rgba(35, 38, 32, .35); --hairline: rgba(35, 38, 32, .08); --chip-border: #E5E2D5; --list-hairline: #EAE7DA; --tab-inactive: #B9BCAC; --wait-border: #CFCBBA; --handle: #D8D4C4; --shadow-card: 0 1px 6px rgba(35, 38, 32, .04); --shadow-task: 0 2px 10px rgba(35, 38, 32, .07); --seg-track: #DDD9C9; --btn-disabled-ink: #B4B0A0; --dash-border: #D3CFBE; --chevron-soft: #C9C5B4; --shadow-step: 0 3px 16px rgba(35, 38, 32, .06); --on-sage-status: #B9C2AC; --thumb-sage-stop: #C7D3BA; --amber-chip-border: #E8D6B4; --rose-chip-border: #E4CBD1; }
+.app-real { --sage-light: #A9BB9C; --steth-top: #4A5940; --on-gold: #5C4322; --on-sage-illo: #233420; --on-medal: #4A3418; --on-sage-soft: #C4CCB6; --doc-light: #9FB2C0; --doc-deep: #5A7080; --on-doc: #E9EFF3; --steel-mid: #BFCBD4; --mascara-recorte: #000000; }
+.app-real { --painel-chip: rgba(247, 245, 239, .12); }
+.app-real { --toque-mola: cubic-bezier(.34, 1.56, .64, 1); --toque-assenta: cubic-bezier(.2, .8, .2, 1); --toque-duracao: .22s; --toque-aperto: 90ms; }
+.app-real { --frame-w: 390px; --frame-h: 844px; --frame-pad: 23px; --nav-bottom: 21px; --nav-inset: 18px; --nav-clearance: 105px; --radius-pill: 999px; --radius-card: 20px; --radius-sheet: 36px; }
+.app-real * { box-sizing: border-box; }
+.app-real { height: 100%; }
+.app-real { margin: 0px; background: var(--cream-deep); color: var(--ink); font-family: var(--sans); -webkit-font-smoothing: antialiased; -webkit-tap-highlight-color: transparent; }
+.app-real h1, .app-real h2, .app-real h3, .app-real h4, .app-real p { margin: 0px; }
+.app-real button { font: inherit; color: inherit; background: none; border: 0px; padding: 0px; cursor: pointer; }
+.app-real a { color: inherit; text-decoration: none; }
+.app-real svg { display: block; }
+.app-real .money { font-family: var(--sans); font-weight: 800; letter-spacing: -0.01em; font-variant-numeric: tabular-nums; }
+.app-real .phone { position: relative; width: var(--frame-w); height: var(--frame-h); flex: 0 0 auto; background: var(--cream); border-radius: 60px; box-shadow: var(--shadow-phone),0 0 0 13px var(--bezel); overflow: hidden; padding: var(--frame-pad) var(--frame-pad) 0; display: flex; flex-direction: column; }
+.app-real .phone-notch { position: absolute; top: 16px; left: 50%; transform: translate(-50%); width: 117px; height: 31px; background: var(--bezel); border-radius: 18px; z-index: 5; }
+.app-real .phone-status { display: flex; justify-content: space-between; font-size: 15px; color: var(--ink-soft); padding-top: 5px; margin-bottom: 7px; flex: 0 0 auto; }
+.app-real .screen-scroll { flex: 1 1 0%; overflow: hidden auto; padding-bottom: var(--nav-clearance); }
+.app-real .screen-scroll.sem-nav { padding-bottom: max(env(safe-area-inset-bottom),8px); }
+.app-real .step-count { font-size: 13.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 13px; }
+.app-real .step-count.amber { color: var(--amber); }
+.app-real .seg-bar { display: flex; gap: 6.5px; margin-bottom: 26px; }
+.app-real .seg { flex: 1 1 0%; height: 6.5px; border-radius: var(--radius-pill); background: var(--seg-track); }
+.app-real .seg.done { background: var(--sage); }
+.app-real .seg.current { background: var(--amber); }
+.app-real .wizard { min-height: 100%; display: flex; flex-direction: column; }
+.app-real .close-row { display: flex; justify-content: flex-end; margin-bottom: 8px; flex: 0 0 auto; }
+.app-real .close-x { width: 34px; height: 34px; border-radius: 50%; background: var(--fill); display: flex; align-items: center; justify-content: center; color: var(--ink-soft); }
+.app-real .close-x svg { width: 15px; height: 15px; }
+.app-real .wizard-body { flex: 1 1 0%; display: flex; flex-direction: column; min-height: 0px; }
+.app-real .wizard-title { font-family: var(--serif); font-size: 30px; font-weight: 400; line-height: 1.25; margin-bottom: 29px; white-space: pre-line; }
+.app-real .wizard-foot { margin-top: auto; padding: 18px 0 max(env(safe-area-inset-bottom),16px); flex: 0 0 auto; }
+.app-real .wizard-helper { display: block; width: 100%; text-align: center; font-size: 15px; color: var(--ink-soft); margin-top: 13px; }
+.app-real .wizard-helper:disabled { color: var(--btn-disabled-ink); cursor: default; }
+.app-real .payer-row { display: flex; align-items: center; gap: 16px; width: 100%; padding: 17px 5px; border-bottom: 1px solid var(--list-hairline); text-align: left; color: var(--ink); }
+.app-real .payer-radio { width: 25px; height: 25px; border-radius: 50%; border: 2.3px solid var(--wait-border); flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+.app-real .payer-row.selected .payer-radio { border-color: var(--sage-deep); background: var(--sage-deep); }
+.app-real .payer-radio .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--cream); opacity: 0; }
+.app-real .payer-row.selected .payer-radio .dot { opacity: 1; }
+.app-real .payer-ic { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-family: var(--serif); font-size: 17px; font-weight: 700; }
+.app-real .payer-ic.sage { background: var(--sage-tint); color: var(--sage-deep); }
+.app-real .payer-ic.amber { background: var(--amber-tint); color: var(--amber-deep); }
+.app-real .payer-ic.steel { background: var(--steel-tint); color: var(--steel-deep); }
+.app-real .payer-main { flex: 1 1 0%; min-width: 0px; }
+.app-real .payer-name { display: block; font-size: 17.5px; font-weight: 600; }
+.app-real .payer-sub { display: block; font-size: 14px; color: var(--ink-soft); }
+.app-real .payer-row.new { border-bottom-width: medium; border-bottom-style: none; border-bottom-color: currentcolor; margin-top: 5px; }
+.app-real .payer-row.new .payer-radio { border-style: dashed; color: var(--ink-soft); font-size: 19.5px; line-height: 1; }
+.app-real .payer-row.new .payer-name { color: var(--ink-soft); font-weight: 600; }
+.app-real .value-stage { flex: 1 1 0%; display: flex; flex-direction: column; align-items: center; justify-content: center; padding-bottom: 13px; min-height: 0px; }
+.app-real .value-context { font-size: 15.5px; color: var(--ink-soft); margin-bottom: 13px; }
+.app-real .value-display { font-size: 55px; display: flex; align-items: baseline; gap: 2.5px; }
+.app-real .value-display .rs { font-size: 28px; font-weight: 700; color: var(--ink-soft); margin-right: 2.5px; }
+.app-real .value-cursor { display: inline-block; width: 2.5px; height: 42px; background: var(--sage); margin-left: 4px; animation: 1.1s step-start 0s infinite normal none running blink; }
+.app-real .keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; width: 100%; margin-top: 31px; }
+.app-real .key { text-align: center; padding: 17px 0px; font-size: 23px; font-weight: 600; color: var(--ink); border-radius: 18px; font-variant-numeric: tabular-nums; }
+.app-real .key:active { background: var(--fill); }
+.app-real .key.fn { color: var(--ink-soft); font-size: 19.5px; }
+.app-real .key.fn svg { width: 24px; height: 24px; margin: 0px auto; }
+.app-real .summary-card { background: var(--white); border-radius: var(--radius-card); padding: 8px 21px; box-shadow: var(--shadow-card); margin-bottom: 18px; }
+.app-real .summary-row { display: flex; align-items: center; justify-content: space-between; gap: 13px; padding: 17px 0px; border-bottom: 1px solid var(--list-hairline); }
+.app-real .summary-row:last-child { border-bottom-width: medium; border-bottom-style: none; border-bottom-color: currentcolor; }
+.app-real .summary-row .k { font-size: 15.5px; color: var(--ink-soft); }
+.app-real .summary-row .v { font-size: 17px; font-weight: 700; text-align: right; }
+.app-real .summary-row .v.serif-value { font-family: var(--serif); font-size: 25px; font-weight: 600; }
+.app-real .summary-row .v .aliquota { font-weight: 400; color: var(--ink-soft); }
+.app-real .payer-mini { display: flex; align-items: center; gap: 10px; }
+.app-real .payer-mini .payer-ic { width: 31px; height: 31px; font-size: 13px; }
+.app-real .fiscal-note { font-size: 14px; color: var(--ink-soft); line-height: 1.55; padding: 0px 3px; margin-bottom: 21px; }
+.app-real .fiscal-note b { color: var(--ink); font-weight: 700; }
+.app-real .fiscal-bloco { display: flex; flex-direction: column; gap: 4px; }
+.app-real .fiscal-rotulo { font-size: 11.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); }
+.app-real .fiscal-texto { margin: 0px; font-size: 15px; line-height: 1.5; color: var(--ink); }
+.app-real .fiscal-texto.fraco { font-size: 13.5px; color: var(--ink-soft); }
+.app-real .wizard-exigencias { margin-top: 22px; }
+.app-real .wizard-textarea { width: 100%; min-height: 88px; padding: 14px 16px; border: 1px solid var(--list-hairline); border-radius: 18px; background: var(--white); font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; font-family: inherit; font-optical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; font-language-override: inherit; font-size: 15px; line-height: 1.45; color: var(--ink); resize: vertical; }
+.app-real .wizard-textarea::placeholder { color: var(--ink-soft); opacity: 0.7; }
+.app-real .wizard-textarea:focus { outline: none; border-color: var(--sage); }
+.app-real .summary-row.descricao { flex-direction: column; align-items: flex-start; gap: 6px; }
+.app-real .summary-row.retencao { display: block; }
+.app-real .summary-row.retencao .interruptor-linha { background: var(--cream); }
+.app-real .summary-row.descricao .v { text-align: left; max-width: 100%; font-size: 14px; font-weight: 500; line-height: 1.5; color: var(--ink); white-space: pre-wrap; word-break: break-word; }
+.app-real .navwrap { position: absolute; bottom: var(--nav-bottom); left: var(--nav-inset); right: var(--nav-inset); display: flex; align-items: center; gap: 10px; z-index: 6; }
+.app-real .navpill { flex: 1 1 0%; min-width: 0px; background: var(--white); border-radius: var(--radius-pill); box-shadow: var(--shadow-nav); display: flex; justify-content: space-around; align-items: center; padding: 13px 8px; }
+.app-real .navitem { display: flex; flex-direction: column; align-items: center; gap: 3px; color: var(--nav-inactive); }
+.app-real .navitem svg { width: 25px; height: 25px; }
+.app-real .navitem span { font-size: 10px; font-weight: 700; line-height: 1; color: var(--nav-inactive); }
+.app-real .navitem.active, .app-real .navitem.active span { color: var(--sage-deep); }
+.app-real .nav-dot { width: 5px; height: 5px; border-radius: 50%; margin-top: 1.5px; }
+.app-real .nav-dot.is-empty { background: transparent; }
+.app-real .dim-bg { position: absolute; inset: 0px; background: var(--dim); z-index: 8; animation: 0.3s ease-out 0s 1 normal both running dimIn; }
+.app-real .sheet { position: absolute; left: 0px; right: 0px; bottom: 0px; z-index: 9; background: var(--cream); border-radius: var(--radius-sheet) var(--radius-sheet) 0 0; padding: 34px 29px calc(39px + env(safe-area-inset-bottom)); animation: 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) 0s 1 normal both running sheetUp; max-height: calc(100% - 44px); overflow-y: auto; }
+.app-real .sheet.centro { text-align: center; }
+.app-real .sheet-handle { width: 52px; height: 5px; border-radius: var(--radius-pill); background: var(--handle); margin: 0px auto 23px; }
+.app-real .sheet-title { font-family: var(--serif); font-size: 27px; font-weight: 400; margin: 0px 0px 5px; }
+.app-real .sheet-sub { font-size: 16px; color: var(--ink-soft); margin-bottom: 26px; }
+.app-real .sheet-btns { display: flex; flex-direction: column; gap: 12px; }
+.app-real .ghost-bg-list { opacity: 0.45; filter: blur(1.3px); }
+.app-real .chip-row { display: flex; background: var(--white); border-radius: 22px; padding: 4px; margin-bottom: 17px; opacity: 0; animation: cardIn .5s ease-out var(--delay, .75s) forwards; }
+.app-real .chip { flex: 1 1 0%; display: flex; align-items: center; justify-content: center; gap: 2px; min-height: 44px; padding: 10px 8px; border-radius: 18px; color: var(--ink); font-size: 14.5px; font-weight: 700; letter-spacing: -0.005em; text-decoration: none; }
+.app-real .chip + .chip { border-left: 1px solid var(--cream-deep); border-radius: 0px 18px 18px 0px; }
+.app-real .chip-seta { width: 15px; height: 15px; color: var(--sage); flex-shrink: 0; }
+.app-real .grafico { margin-top: 15px; }
+.app-real .grafico-area { position: relative; height: 48px; }
+.app-real .grafico-area .sparkline { margin-top: 0px; height: 48px; display: block; }
+.app-real .grafico-ponto { position: absolute; width: 7px; height: 7px; margin: -3.5px 0px 0px -3.5px; border-radius: 50%; background: var(--sage); pointer-events: none; opacity: 0; animation: 0.4s ease-out 1.4s 1 normal forwards running graficoAcende; }
+.app-real .grafico-ponto.ativo { width: 13px; height: 13px; margin: -6.5px 0px 0px -6.5px; background: var(--sage-deep); border: 2.5px solid var(--white); box-shadow: 0 0 0 5px color-mix(in srgb,var(--sage) 22%,transparent); }
+.app-real .grafico-colunas { position: absolute; inset: -8px 0px -22px; display: flex; }
+.app-real .grafico-coluna { flex: 1 1 0%; background: none; border: 0px; padding: 0px; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.app-real .grafico-coluna:focus-visible { outline: 2px solid var(--sage); outline-offset: -2px; border-radius: 8px; }
+.app-real .grafico-meses { display: flex; margin-top: 6px; }
+.app-real .grafico-meses span { flex: 1 1 0%; text-align: center; font-size: 11.5px; color: var(--ink-soft); }
+.app-real .grafico-meses span.ativo { color: var(--sage-deep); font-weight: 800; }
+.app-real .grafico-fichas { display: flex; gap: 8px; overflow-x: auto; margin-top: 14px; padding-bottom: 2px; scroll-snap-type: x; scrollbar-width: none; }
+.app-real .grafico-fichas::-webkit-scrollbar { display: none; }
+.app-real .ficha { flex-shrink: 0; scroll-snap-align: start; display: flex; flex-direction: column; align-items: flex-start; gap: 5px; min-width: 128px; padding: 10px 13px 11px; background: var(--white); border: 0px; border-radius: 14px; font: inherit; text-align: left; color: var(--ink); cursor: pointer; }
+.app-real .ficha-dia { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-soft); }
+.app-real .ficha-quem { display: flex; align-items: center; gap: 7px; }
+.app-real .ficha-sigla { width: 24px; height: 24px; border-radius: 50%; background: var(--sage-tint); color: var(--sage-deep); font-size: 10px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.app-real .ficha-nome { font-size: 13.5px; font-weight: 600; white-space: nowrap; }
+.app-real .ficha-valor { font-size: 15px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.app-real .card { background: var(--white); border-radius: var(--radius-card); padding: 18px 21px; margin-bottom: 12px; display: flex; align-items: center; gap: 15px; color: var(--ink); opacity: 0; animation: cardIn .5s ease-out var(--delay, .9s) forwards; }
+.app-real .illo-icon { width: 54px; height: 54px; flex-shrink: 0; }
+.app-real .card-text { flex: 1 1 0%; min-width: 0px; }
+.app-real .card-eyebrow { font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 800; margin-bottom: 2.5px; color: var(--sage-deep); }
+.app-real .card-title { font-size: 16px; font-weight: 600; line-height: 1.3; }
+.app-real .card-arrow { flex-shrink: 0; color: var(--ink-soft); width: 22px; height: 22px; }
+.app-real .hero { position: relative; padding: 7px 0px 27px; margin-bottom: 5px; }
+.app-real .hero-eyebrow { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--sage); font-weight: 700; margin-bottom: 2.5px; opacity: 0; animation: 0.6s ease-out 0.05s 1 normal forwards running riseIn; }
+.app-real .hero-name { font-family: var(--serif); font-size: 32px; font-weight: 700; margin: 0px 0px 17px; opacity: 0; animation: 0.6s ease-out 0.15s 1 normal forwards running riseIn; }
+.app-real .hero-illo-wrap { position: absolute; top: 2px; right: 2px; width: 112px; height: 112px; }
+.app-real .hero-illo-svg { width: 112px; height: 112px; }
+.app-real .hero-illo-halo { position: absolute; inset: -17px; border-radius: 50%; background: radial-gradient(circle at 50% 45%,color-mix(in srgb,var(--amber) 22%,transparent),color-mix(in srgb,var(--sage) 10%,transparent) 55%,transparent 75%); animation: 4.5s ease-in-out 0s infinite normal none running haloBreathe; pointer-events: none; }
+.app-real .glint { position: absolute; width: 15px; height: 15px; opacity: 0; animation: 5s ease-in-out 0s infinite normal none running twinkle; pointer-events: none; }
+.app-real .glint.g1 { top: 46%; right: 4%; animation-delay: 1.2s; }
+.app-real .glint.g2 { top: 6%; right: 30%; width: 10px; height: 10px; animation-delay: 3.4s; }
+.app-real .hero-stat { opacity: 0; animation: 0.6s ease-out 0.3s 1 normal forwards running riseIn; }
+.app-real .hero-stat-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-soft); font-weight: 700; margin-bottom: 5px; }
+.app-real .hero-stat-value { font-size: 44px; font-weight: 800; letter-spacing: -0.02em; color: var(--sage-deep); line-height: 1; margin-bottom: 7px; font-variant-numeric: tabular-nums; }
+.app-real .hero-stat-sub { font-size: 15px; color: var(--ink-soft); }
+.app-real .sparkline { margin-top: 15px; width: 100%; height: 41px; }
+.app-real .sparkline .traco { fill: none; stroke: var(--sage); stroke-width: 2.9; stroke-linecap: round; stroke-dasharray: 300; stroke-dashoffset: 300; animation: 1.4s ease-out 0.5s 1 normal forwards running draw; }
+.app-real .sparkline .fillarea { opacity: 0; animation: 0.8s ease-out 1.6s 1 normal forwards running fadeIn; }
+.app-real .pill-btn { display: inline-block; background: var(--btn-bg, var(--sage-deep)); color: var(--cream); font-size: 16px; font-weight: 700; border-radius: var(--radius-pill); padding: 12px 21px; text-align: center; }
+.app-real .pill-btn.ghost { background: transparent; border: 2px solid var(--btn-bg, var(--sage-deep)); color: var(--btn-bg, var(--sage-deep)); }
+.app-real .pill-btn.full { display: block; width: 100%; padding: 17px; font-size: 17px; }
+.app-real .pill-btn.ghost.full { padding: 15px; }
+.app-real .pill-btn.disabled, .app-real .pill-btn.disabled.ghost { background: var(--fill); border-color: transparent; color: var(--btn-disabled-ink); cursor: default; }
+.app-real .list-item { display: flex; align-items: center; gap: 16px; padding: 13px 0px; border-bottom: 1px solid var(--list-hairline); color: var(--ink); }
+.app-real .li-icon { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.app-real .li-icon svg { width: 20px; height: 20px; }
+.app-real .li-icon.sage { background: var(--sage-tint); color: var(--sage-deep); }
+.app-real .li-icon.steel { background: var(--steel-tint); color: var(--steel-deep); }
+.app-real .li-icon.dune { background: var(--dune-tint); color: var(--dune); }
+.app-real .li-main { flex: 1 1 0%; min-width: 0px; }
+.app-real .li-title { font-size: 16px; font-weight: 600; }
+.app-real .li-sub { font-size: 14px; color: var(--ink-soft); }
+.app-real .li-value { font-size: 17px; text-align: right; flex-shrink: 0; }
+.app-real .li-acao { display: block; margin-left: auto; font-size: 13px; font-weight: 700; font-family: var(--sans); color: var(--sage); }
+.app-real .list-section-label { font-size: 12px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 10px; }
+.app-real .dual-tabs { display: flex; gap: 18px; align-items: baseline; margin-bottom: 18px; padding-top: 8px; }
+.app-real .dual-tabs .t { font-family: var(--serif); font-size: 28px; color: var(--tab-inactive); }
+.app-real .dual-tabs .t.active { color: var(--ink); }
+.app-real .fin-titulo { font-family: var(--serif); font-weight: 400; font-size: 30px; line-height: 1.15; margin: 8px 0px 18px; color: var(--ink); }
+.app-real .fin-card { background: var(--white); border-radius: 20px; padding: 18px 20px 20px; margin-bottom: 14px; }
+.app-real .fin-card-topo { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.app-real .fin-card-titulo { font-size: 18px; font-weight: 700; margin: 0px; color: var(--ink); }
+.app-real .fin-card-sub { font-size: 14px; line-height: 1.45; color: var(--ink-soft); margin: 6px 0px 14px; }
+.app-real .fin-card-sub.fraco { margin-bottom: 4px; }
+.app-real .fin-link { font-size: 14px; font-weight: 700; color: var(--sage-deep); }
+.app-real .fin-nota { display: flex; align-items: center; gap: 12px; width: 100%; padding: 11px 0px; background: none; border-right: 0px; border-bottom: 0px; border-left: 0px; border-image: none; border-top: 1px solid var(--list-hairline); font: inherit; text-align: left; color: var(--ink); cursor: pointer; }
+.app-real .fin-nota-textos { flex: 1 1 0%; min-width: 0px; display: flex; flex-direction: column; gap: 2px; }
+.app-real .fin-nota-quem { font-size: 15px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.app-real .fin-nota-sub { font-size: 13px; color: var(--ink-soft); }
+.app-real .fin-nota-valor { font-size: 15.5px; font-weight: 800; font-variant-numeric: tabular-nums; flex-shrink: 0; }
+.app-real .fin-acoes { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
+.app-real .fin-detalhes { text-align: center; padding: 6px 0px 0px; }
+.app-real .back-row { display: flex; align-items: center; gap: 13px; margin-bottom: 21px; padding-top: 8px; color: var(--ink); }
+.app-real .back-arrow { width: 34px; height: 34px; border-radius: 50%; background: var(--fill); display: flex; align-items: center; justify-content: center; color: var(--ink-soft); flex-shrink: 0; }
+.app-real .back-arrow svg { width: 17px; height: 17px; }
+.app-real .back-title { font-family: var(--serif); font-size: 21px; }
+.app-real .success-illo-wrap { position: relative; width: 81px; height: 81px; margin: 0px auto 18px; }
+.app-real .success-illo-svg { width: 81px; height: 81px; }
+.app-real .success-halo { position: absolute; inset: -14px; border-radius: 50%; background: radial-gradient(circle at 50% 45%,color-mix(in srgb,var(--sage) 35%,transparent),color-mix(in srgb,var(--sage) 8%,transparent) 60%,transparent 78%); animation: 4.2s ease-in-out 0.6s infinite normal none running haloBreathe; }
+.app-real .success-glint { position: absolute; width: 13px; height: 13px; opacity: 0; top: -5px; right: -8px; animation: 5s ease-in-out 1s infinite normal none running twinkle; }
+.app-real .sheet-value { font-size: 34px; color: var(--sage-deep); margin: 0px 0px 3px; line-height: 1.1; }
+.app-real .notas-acao { padding-top: 21px; }
+.app-real .repetir-card { display: block; width: 100%; text-align: left; background: var(--white); border-radius: 18px; box-shadow: 0 0 0 1.5px var(--sage-tint) inset; padding: 15px 18px; margin-bottom: 18px; color: var(--ink); }
+.app-real .repetir-eyebrow { display: block; font-size: 10.5px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--sage-deep); margin-bottom: 4px; }
+.app-real .repetir-titulo { display: block; font-size: 16.5px; font-weight: 700; }
+.app-real .repetir-sub { display: block; margin-top: 3px; font-size: 13px; color: var(--ink-soft); }
+.app-real .notas-acao-topo { padding-top: 2px; padding-bottom: 18px; }
+.app-real .section-title { font-family: var(--serif); font-size: 26px; font-weight: 400; margin-bottom: 21px; }
+.app-real .section-title.apertado { margin-bottom: 18px; }
+.app-real .calendario { display: flex; flex-direction: column; gap: 14px; margin-top: 8px; }
+.app-real .calendario-meses { display: flex; gap: 8px; }
+.app-real .calendario-mes { flex: 1 1 0%; padding: 10px 14px; border: 1px solid var(--chip-border); border-radius: var(--radius-pill); background: var(--white); font-style: inherit; font-variant: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; font-optical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; font-language-override: inherit; font-size: 14px; font-weight: 700; color: var(--ink-soft); cursor: pointer; }
+.app-real .calendario-mes.ativo { border-color: var(--sage-deep); color: var(--sage-deep); background: var(--sage-tint); }
+.app-real .calendario-grade { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px 4px; justify-items: center; }
+.app-real .calendario-semana { font-size: 11.5px; font-weight: 700; letter-spacing: 0.06em; color: var(--ink-soft); padding-bottom: 2px; }
+.app-real .calendario-dia { width: 40px; height: 40px; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: 50%; background: transparent; font-style: inherit; font-variant-ligatures: inherit; font-variant-caps: inherit; font-variant-east-asian: inherit; font-variant-alternates: inherit; font-variant-position: inherit; font-variant-emoji: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; font-optical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; font-language-override: inherit; font-size: 15px; font-weight: 600; font-variant-numeric: tabular-nums; color: var(--ink); cursor: pointer; }
+.app-real .calendario-dia.marcado { background: var(--sage-deep); color: var(--white); }
+.app-real .calendario-dia:disabled { color: var(--ink-soft); opacity: 0.4; cursor: default; }
+.app-real .calendario-dia:focus-visible, .app-real .calendario-mes:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
+.app-real .interruptor { display: flex; flex-direction: column; gap: 8px; }
+.app-real .interruptor-linha { display: flex; align-items: center; gap: 14px; width: 100%; background: var(--fill); border: 0px; border-radius: 18px; padding: 15px 16px 15px 18px; text-align: left; font-family: var(--sans); color: var(--ink); cursor: pointer; box-shadow: 0 0 0 1px var(--chip-border); }
+.app-real .interruptor-linha:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--sage); }
+.app-real .interruptor-linha:disabled { cursor: default; opacity: 0.6; }
+.app-real .interruptor-texto { display: flex; flex-direction: column; gap: 4px; flex: 1 1 0%; min-width: 0px; }
+.app-real .interruptor-rotulo { font-size: 15px; font-weight: 600; color: var(--ink); }
+.app-real .interruptor-apoio { font-size: 13px; line-height: 1.45; color: var(--ink-soft); }
+.app-real .interruptor-chave { flex-shrink: 0; width: 46px; height: 28px; border-radius: 999px; background: var(--cream-deep); box-shadow: inset 0 0 0 1px var(--chip-border); position: relative; transition: background-color var(--toque-duracao) var(--toque-assenta),box-shadow var(--toque-duracao) var(--toque-assenta); }
+.app-real .interruptor-bolinha { position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; border-radius: 50%; background: var(--white); box-shadow: rgba(35, 38, 31, 0.18) 0px 1px 2px; transition: transform var(--toque-duracao) var(--toque-mola),width var(--toque-aperto) ease-out; }
+.app-real .interruptor-linha:is(:active, [data-apertado]):not(:disabled) .interruptor-bolinha { width: 27px; }
+.app-real .interruptor.ligado .interruptor-chave { background: var(--sage-deep); box-shadow: none; }
+.app-real .interruptor.ligado .interruptor-bolinha { transform: translate(18px); }
+.app-real .interruptor.ligado .interruptor-linha:is(:active, [data-apertado]):not(:disabled) .interruptor-bolinha { transform: translate(13px); }
+.app-real .interruptor-origem { font-size: 12.5px; line-height: 1.45; color: var(--ink-soft); padding: 0px 4px; }
+.app-real .copy-ic.claro { width: 32px; height: 32px; padding: 0px; border-radius: 50%; border: 1px solid var(--list-hairline); background: transparent; color: var(--ink-soft); display: flex; align-items: center; justify-content: center; flex-shrink: 0; cursor: pointer; transition: background 0.18s ease-out, color 0.18s ease-out, border-color 0.18s ease-out; }
+.app-real .copy-ic.claro svg { width: 14px; height: 14px; }
+.app-real .empresa-titulo { font-family: var(--serif); font-weight: 400; font-size: 30px; line-height: 1.15; margin: 8px 0px 18px; color: var(--ink); }
+.app-real .empresa-card { background: var(--white); border-radius: 20px; padding: 6px 18px; margin-bottom: 22px; }
+.app-real .empresa-nome { display: flex; align-items: center; justify-content: space-between; gap: 12px; font-size: 17px; font-weight: 700; line-height: 1.3; padding: 14px 0px 10px; border-bottom: 1px solid var(--list-hairline); }
+.app-real .empresa-linha { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 11px 0px; border-bottom: 1px solid var(--list-hairline); font-size: 14.5px; }
+.app-real .empresa-linha:last-child { border-bottom-width: medium; border-bottom-style: none; border-bottom-color: currentcolor; }
+.app-real .empresa-k { color: var(--ink-soft); flex-shrink: 0; }
+.app-real .empresa-v { flex: 1 1 0%; min-width: 0px; text-align: right; font-weight: 600; color: var(--ink); overflow-wrap: anywhere; }
+.app-real .empresa-copiar-tudo { padding: 12px 0px 14px; }
+.app-real .empresa-v.fraco { font-weight: 500; color: var(--ink-soft); }
+.app-real .empresa-v.mono { font-variant-numeric: tabular-nums; }
+.app-real .empresa-secao { font-size: 11.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dune); margin: 26px 0px 6px; }
+.app-real .pg-intro { font-size: 15px; line-height: 1.5; color: var(--ink-soft); margin-bottom: 18px; }
+.app-real .pg-acao { margin: 22px 0px 28px; }
+.app-real .copy-ic { width: 24px; height: 24px; border-radius: 50%; border: 1px solid color-mix(in srgb,var(--cream) 35%,transparent); display: flex; align-items: center; justify-content: center; color: var(--cream); flex-shrink: 0; transition: background 0.18s ease-out, border-color 0.18s ease-out; }
+.app-real .copy-ic svg { width: 12px; height: 12px; }
+@media (prefers-reduced-motion: reduce) {
+.app-real *, .app-real ::before, .app-real ::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+.app-real .value-cursor { animation: auto ease 0s 1 normal none running none; }
+.app-real .sheet, .app-real .dim-bg { animation: auto ease 0s 1 normal none running none; }
+.app-real .chip-row { opacity: 1; animation: auto ease 0s 1 normal none running none; }
+.app-real .grafico-ponto { opacity: 1; animation: auto ease 0s 1 normal none running none; }
+.app-real .card, .app-real .card.urgente { opacity: 1; animation: auto ease 0s 1 normal none running none; }
+.app-real .hero-eyebrow, .app-real .hero-name, .app-real .hero-stat, .app-real .see-all, .app-real .home-quieta { opacity: 1; animation: auto ease 0s 1 normal none running none; }
+.app-real .hero-illo-halo { animation: auto ease 0s 1 normal none running none; opacity: 0.7; }
+.app-real .glint { display: none; }
+.app-real .sparkline .traco { stroke-dashoffset: 0; animation: auto ease 0s 1 normal none running none; }
+.app-real .sparkline .fillarea { opacity: 1; animation: auto ease 0s 1 normal none running none; }
+.app-real .success-halo { animation: auto ease 0s 1 normal none running none; opacity: 0.7; }
+.app-real .success-glint { display: none; }
+.app-real .copy-ic.claro { transition: none; }
+}
+@keyframes blink { 
+  50% { opacity: 0; }
+}
+@keyframes sheetUp { 
+  0% { transform: translateY(40%); opacity: 0.6; }
+  100% { transform: translateY(0px); opacity: 1; }
+}
+@keyframes dimIn { 
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+@keyframes graficoAcende { 
+  100% { opacity: 1; }
+}
+@keyframes draw { 
+  100% { stroke-dashoffset: 0; }
+}
+@keyframes fadeIn { 
+  100% { opacity: 1; }
+}
+@keyframes twinkle { 
+  0%, 80%, 100% { opacity: 0; transform: scale(0.5) rotate(0deg); }
+  87% { opacity: 0.95; transform: scale(1.1) rotate(16deg); }
+  93% { opacity: 0; transform: scale(0.6) rotate(28deg); }
+}
+@keyframes haloBreathe { 
+  0%, 100% { opacity: 0.5; transform: scale(0.96); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+@keyframes riseIn { 
+  0% { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0px); }
+}
+@keyframes cardIn { 
+  0% { opacity: 0; transform: translateY(16px); }
+  100% { opacity: 1; transform: translateY(0px); }
+}
