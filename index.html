@@ -311,6 +311,19 @@ h3:not(.app-real *) { font-size: var(--t-card); line-height: 1.2; }
   box-shadow: 0 8px 24px rgba(0,0,0,.25); animation: notifEntra .5s cubic-bezier(.2,.8,.2,1) both;
 }
 .bloq-abrir[hidden] { display: none; }
+/* O convite pra tocar no "Abrir o app" (Pedro, 11/11/2026: "algo indicando pra pessoa clicar nele"): os mesmos anéis
+   dourados que pulsam em volta do aparelho, a seta subindo de leve e uma frase curta em cima. Sem mão. */
+.bloq-abrir::before, .bloq-abrir::after { content: ""; position: absolute; inset: -5px; border-radius: 999px; border: 2px solid #E3C692; box-shadow: 0 0 14px rgba(227,198,146,.7); pointer-events: none; animation: pingAbrir 2s ease-out infinite; }
+.bloq-abrir::after { animation-delay: 1s; }
+@keyframes pingAbrir { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(1.22, 1.6); opacity: 0; } }
+.bloq-abrir .seta-abrir { display: inline-block; margin-left: 2px; animation: setaAbrir 1.4s ease-in-out infinite; }
+@keyframes setaAbrir { 0%, 100% { transform: translateY(1px); } 50% { transform: translateY(-3px); } }
+.bloq-dica {
+  position: absolute; bottom: 82px; left: 0; right: 0; z-index: 2; text-align: center; pointer-events: none;
+  font-size: 12.5px; font-weight: 700; letter-spacing: .02em; color: #E3C692; text-shadow: 0 1px 8px rgba(0,0,0,.45);
+  animation: notifEntra .5s cubic-bezier(.2,.8,.2,1) .25s both;
+}
+.bloq-abrir[hidden] + .bloq-dica { display: none; }
 
 /* As notificações: vidro creme sobre a cor cheia, como as do iPhone; o remetente é a SAVA, no WhatsApp. */
 .notif {
@@ -971,7 +984,8 @@ main:focus { outline: none; }
                     <div class="bloq-pilha" id="pilha"></div>
                     <span class="bloq-redondo lanterna" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3h8v4l-2 3v11h-4V10L8 7z"/><path d="M12 13v2"/></svg></span>
                     <span class="bloq-redondo foto" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-2h6l2 2h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></span>
-                    <button type="button" class="bloq-abrir" id="abrirApp" data-acao="abrir" hidden>Abrir o app <span aria-hidden="true">↑</span></button>
+                    <button type="button" class="bloq-abrir" id="abrirApp" data-acao="abrir" hidden>Abrir o app <span class="seta-abrir" aria-hidden="true">↑</span></button>
+                    <p class="bloq-dica" aria-hidden="true">Toque e veja a nota dentro do app</p>
                     <span class="bloq-barra" aria-hidden="true"></span>
                   </div>
                   <p class="aviso-app" id="avisoApp" role="status"></p>
