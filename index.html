@@ -209,9 +209,8 @@ h3:not(.app-real *) { font-size: var(--t-card); line-height: 1.2; }
 .palco3d {
   --k: 1;
   position: relative; height: calc(760px * var(--k)); perspective: 1800px; perspective-origin: 50% 40%;
-  touch-action: pan-y; cursor: grab; -webkit-user-select: none; user-select: none;
+  touch-action: pan-y; -webkit-user-select: none; user-select: none;
 }
-.palco3d.arrastando { cursor: grabbing; }
 .escala { position: absolute; left: 50%; top: 0; width: 344px; height: 724px; margin-left: -172px; transform: scale(var(--k)); transform-origin: 50% 0; transform-style: preserve-3d; }
 /* Em preserve-3d a caixa do próprio .escala é um plano em z=0 que concorre no teste de clique com os filhos. O
    iPhone inclina uns graus pra trás, então a METADE DE CIMA da tela fica atrás desse plano e o clique ia pro
@@ -222,7 +221,7 @@ h3:not(.app-real *) { font-size: var(--t-card); line-height: 1.2; }
 .iphone {
   --r: 58px; --t: 7px;
   position: absolute; inset: 0; transform-style: preserve-3d;
-  transform: rotateX(.06rad) rotateY(-.42rad);
+  transform: none; /* reto e parado (11/11/2026) */
   will-change: transform;
 }
 /* Grafite, a partir do --bezel dos mockups do app: o aparelho é moldura, quem tem cor é a tela. */
@@ -954,7 +953,7 @@ main:focus { outline: none; }
           <p class="chamada-titulo">Toque na tela e <span class="luz">use o app</span></p>
           <svg class="seta-baixo" viewBox="0 0 24 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v34M4 28l8 8 8-8"/></svg>
         </div>
-        <div class="palco3d" id="palco3d" role="img" aria-label="Um iPhone bloqueado recebe da SAVA, pelo WhatsApp, a nota do plantão que o hospital pediu, pronta pra conferir. A médica confere, toca em Emitir a nota e a nota autorizada chega, sem destravar o celular. Depois dá pra abrir o app e usar, e arrastar pra girar o aparelho.">
+        <div class="palco3d" id="palco3d" role="img" aria-label="Um iPhone bloqueado recebe da SAVA, pelo WhatsApp, a nota do plantão que o hospital pediu, pronta pra conferir. A médica confere, toca em Emitir a nota e a nota autorizada chega, sem destravar o celular. Depois dá pra abrir o app e usar.">
           <div class="sombra-fone" aria-hidden="true"></div>
           <div class="anel" aria-hidden="true"></div>
           <div class="escala">
@@ -995,7 +994,7 @@ main:focus { outline: none; }
             </div>
           </div>
         </div>
-        <div class="demo-rodape"><span class="dica-giro">Toque na tela · arraste pra girar</span><button type="button" id="replay">↻ recomeçar</button></div>
+        <div class="demo-rodape"><span class="dica-giro">Toque na tela</span><button type="button" id="replay">↻ recomeçar</button></div>
       </div>
     </div>
   </section>
@@ -1830,70 +1829,18 @@ de emitir</h1><div class="summary-card"><div class="summary-row"><div class="k">
     return { recomecar, etapa: () => etapa }
   })()
 
-  /* ------------------------------------------------ o iPhone: chega girando de leve e PARA num ângulo de repouso, quase
-     de frente (design.md §6: posição só muda na entrada; depois, o que se mexe é a luz no vidro). Nunca vira de
-     costas por conta própria (Pedro, 22/10). Quem arrasta (mais de 8px na horizontal) gira o quanto quiser, com
-     inércia, e vê as costas; solto, ele volta pra frente mais próxima. Tocar na tela vira o aparelho de frente
-     enquanto a pessoa usa; 12 s sem toque, ele volta ao repouso. Toque curto é clique no app, não giro. Assentado,
-     o laço para: nada fica rodando à toa. */
+  /* ------------------------------------------------ o iPhone: reto, de frente e PARADO (Pedro, 11/11/2026: "deixe reto e
+     estático, o fato dele ficar mexendo está atrapalhando a interatividade"). Sem giro de entrada, sem arrastar pra
+     girar, sem voltar ao repouso: o único trabalho daqui é escalar o aparelho pra caber na coluna. O giro antigo está
+     no histórico do git (commit anterior a este). */
   ;(() => {
     const palco = $('#palco3d'), fone = $('#iphone'), sombra = $('.sombra-fone')
-    const ESPERA = 12000, REPOUSO = -0.18 /* rad: uns 10°, o bastante pra mostrar a espessura */
-    let ang = quieto ? REPOUSO : -0.62, vel = 0, arrasto = null, ultX = 0, ultT = 0, raf = null, visivel = true, volta
-    let inicio = null /* { id, x, y } do toque que ainda não virou arrasto */, arrastou = false
     function ajustar() { palco.style.setProperty('--k', Math.min(1, palco.clientWidth / 380).toFixed(3)) }
-    function pintar() {
-      fone.style.transform = `rotateX(0.06rad) rotateY(${ang.toFixed(4)}rad)`
-      sombra.style.setProperty('--larg-sombra', (0.55 + 0.45 * Math.abs(Math.cos(ang))).toFixed(3))
-      fone.style.setProperty('--luz', (50 + Math.sin(ang) * 45).toFixed(1) + '%')
-    }
-    function laco(t) {
-      raf = requestAnimationFrame(laco)
-      if (arrasto === null) {
-        if (Math.abs(vel) > 0.0004) { ang += vel; vel *= 0.95 }
-        else {
-          const frente = Math.round(ang / (2 * Math.PI)) * 2 * Math.PI /* a frente mais perto de onde ele parou */
-          const emUso = t - mexeuNoApp < ESPERA
-          const alvo = frente + (emUso ? 0 : REPOUSO)
-          ang = quieto ? alvo : ang + (alvo - ang) * (emUso ? 0.09 : 0.05)
-          if (Math.abs(alvo - ang) < 0.0005) { ang = alvo; parar() }
-        }
-      }
-      pintar()
-    }
-    const rodar = () => { if (raf === null && visivel && !document.hidden) raf = requestAnimationFrame(laco) }
-    const parar = () => { if (raf !== null) cancelAnimationFrame(raf); raf = null }
-    acordarFone = rodar
-    /* Tocar no app vira o aparelho de frente agora, e o devolve ao repouso quando a espera acaba. */
-    palco.addEventListener('click', () => { rodar(); clearTimeout(volta); volta = setTimeout(rodar, ESPERA + 50) })
-    palco.addEventListener('pointerdown', (e) => {
-      inicio = { id: e.pointerId, x: e.clientX, y: e.clientY }; arrastou = false
-      ultX = e.clientX; ultT = performance.now()
-      rodar()
-    })
-    palco.addEventListener('pointermove', (e) => {
-      if (inicio && inicio.id === e.pointerId && arrasto === null) {
-        const dx = e.clientX - inicio.x, dy = e.clientY - inicio.y
-        if (Math.abs(dx) > 8 && Math.abs(dx) > Math.abs(dy)) {
-          arrasto = e.pointerId; arrastou = true; vel = 0; mexeuNoApp = -Infinity
-          palco.setPointerCapture(e.pointerId); palco.classList.add('arrastando')
-        }
-      }
-      if (arrasto !== e.pointerId) return
-      const agora = performance.now(), dx = e.clientX - ultX
-      const passo = dx * 0.012
-      ang += passo; vel = passo / Math.max(1, (agora - ultT) / 16.7)
-      ultX = e.clientX; ultT = agora
-    })
-    const soltar = () => { arrasto = null; inicio = null; palco.classList.remove('arrastando'); if (quieto) vel = 0 }
-    palco.addEventListener('pointerup', soltar); palco.addEventListener('pointercancel', soltar)
-    /* Arrastar não é clicar: o clique que vem no fim de um giro não chega no app. */
-    palco.addEventListener('click', (e) => { if (arrastou) { e.stopPropagation(); e.preventDefault(); arrastou = false } }, true)
-    new IntersectionObserver((es) => { visivel = es[0].isIntersecting; if (visivel && !quieto) rodar(); else parar() }).observe(palco)
-    document.addEventListener('visibilitychange', () => { if (document.hidden) parar(); else if (!quieto) rodar() })
+    fone.style.transform = 'none'
+    fone.style.setProperty('--luz', '50%')
+    sombra.style.setProperty('--larg-sombra', '1')
     window.addEventListener('resize', ajustar)
-    ajustar(); pintar()
-    if (!quieto) rodar()
+    ajustar()
   })()
 
   /* ------------------------------------------------ como funciona: o que corre por cada caminho */
