@@ -195,15 +195,6 @@ h3:not(.app-real *) { font-size: var(--t-card); line-height: 1.2; }
 .capa .lead { margin-top: 22px; }
 .hero-acoes { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
 @media (max-width: 520px) { .hero-acoes .pilula { width: 100%; } }
-/* Os selos são o chip dos atalhos da Home do app: branco, borda clara, pontinho sálvia. */
-.selos { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
-.selo {
-  display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px;
-  font-size: 13px; color: var(--texto-2); background: var(--white); border: 1px solid var(--chip-border);
-}
-.selo i { width: 6px; height: 6px; border-radius: 50%; background: var(--sage); flex: none; }
-.selo b { color: var(--texto); font-weight: 700; }
-.selo b.num { font-weight: 800; }
 
 /* O iPhone do hero, em 3D de CSS. A espessura é uma pilha de camadas (--t); frente e costas são faces com
    backface-visibility. A tela é HTML de verdade. Arrastar gira; sozinho, ele chega e PARA num ângulo leve
@@ -934,12 +925,6 @@ main:focus { outline: none; }
         <div class="hero-acoes">
           <a class="pilula" href="#comecar">Quero falar com a SAVA <span class="seta" aria-hidden="true">→</span></a>
           <a class="pilula contorno" href="#demo">Ver a nota sem abrir o app</a>
-        </div>
-        <div class="selos">
-          <span class="selo"><i></i><b class="num">R$ 300/mês</b> com tudo dentro</span>
-          <span class="selo"><i></i><b>Gente conferindo</b> antes de você pagar</span>
-          <span class="selo"><i></i>Em produção em <b>BH e Uberlândia</b></span>
-          <span class="selo"><i></i><b>Sem fidelidade</b></span>
         </div>
       </div>
 
