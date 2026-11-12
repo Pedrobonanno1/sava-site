@@ -252,8 +252,23 @@ h3:not(.app-real *) { font-size: var(--t-card); line-height: 1.2; }
 .reflexo { position: absolute; inset: 0; pointer-events: none; z-index: 4; border-radius: inherit; background: linear-gradient(115deg, transparent 35%, rgba(255,255,255,.10) 46%, rgba(255,255,255,.03) 54%, transparent 62%); background-size: 260% 100%; background-position: var(--luz, 50%) 0; }
 /* A tela do iPhone é o app REAL: o HTML e o CSS das telas da main (o <style id="app-real"> e os <template id="tela-*">,
    gerados por montar-telas.mjs a partir do build de produção), no tamanho do app (390x844) e escalados pro vidro deste
-   aparelho (322 de largura). O vidro é a moldura: a do app sai. */
-.tela .app-real { position: absolute; left: 0; top: 0; width: 390px; height: 844px; transform: scale(.82564); transform-origin: 0 0; }
+   aparelho (322 de largura). O vidro é a moldura: a do app sai.
+   NITIDEZ (12/11/2026, "qualidade de imagem muito ruim"): o encolhimento é `zoom`, não `transform: scale`. Com zoom o
+   navegador refaz o layout e desenha o texto já no tamanho final; com scale ele pintava a tela em 390px e reduzia a
+   imagem, e o texto saía borrado. */
+/* `isolation: isolate` faz o que o transform fazia de graça: as camadas do app (a barra de abas tem z-index alto) ficam
+   presas dentro dele. Sem isso a barra do app passava por cima da tela de bloqueio e roubava o toque do "Abrir o app". */
+.tela .app-real { position: absolute; left: 0; top: 0; width: 390px; height: 844px; zoom: .82564; isolation: isolate; }
+/* O aparelho do topo é reto e parado (11/11/2026), então não precisa mais ser montado em 3D: perspectiva, camadas
+   de espessura e `will-change` faziam o Chrome pintar o vidro como imagem numa camada própria (mais borrão). Plano,
+   com os botões laterais como traços. Os iPhones em leque da seção da nota continuam em 3D. */
+#palco3d { perspective: none; }
+#palco3d .escala, #palco3d .iphone { transform-style: flat; will-change: auto; }
+#palco3d .camada, #palco3d .costas { display: none; }
+#palco3d .frente { transform: none; -webkit-backface-visibility: visible; backface-visibility: visible; }
+#palco3d .botao-lado { transform: none; width: 4px; border-radius: 2px 0 0 2px; background: #2b2d27; }
+#palco3d .botao-lado.esq { left: -3px; }
+#palco3d .botao-lado.dir { right: -3px; border-radius: 0 2px 2px 0; }
 .tela .app-real .phone { border-radius: 0; box-shadow: none; }
 .tela .app-real .phone[hidden] { display: none; }
 .app-real .phone-icones { display: inline-flex; align-items: center; gap: 5px; }
