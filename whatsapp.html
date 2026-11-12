@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Abrindo o WhatsApp da SAVA</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#F7F5EF">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<!--
+  A PONTE PRO WHATSAPP (12/11/2026). Todo botão de "falar com a SAVA" do site abre ESTA página numa aba nova, e ela
+  vai sozinha pra conversa com a SAVA, com a mensagem já escrita (?text=).
+
+  Por que existe: quem tem o WhatsApp Web instalado como app do Chrome (é o caso do Pedro) não consegue abrir a conversa
+  por um link comum. O Chrome captura todo link que ABRE ABA NOVA em web.whatsapp.com e, como o manifesto do WhatsApp
+  pede `launch_handler: focus-existing`, só traz pra frente a janela que já está aberta, sem abrir conversa nenhuma. É
+  o que acontece no botão "Continuar para o WhatsApp Web" do wa.me e no link direto pra web.whatsapp.com/send.
+  Navegação NA MESMA ABA não é capturada (é o que o botão "Abrir app" do wa.me faz, e funciona). Então a aba nova nasce
+  aqui, no nosso domínio, e é ela que navega pro WhatsApp.
+
+  O número é fixo: esta página só fala com a SAVA, não serve de atalho pra outro telefone.
+-->
+<style>
+  :root { --cream: #F7F5EF; --ink: #23261F; --ink-soft: #787C6C; --sage: #75886A; --sage-deep: #333D2B; }
+  html { background: var(--cream); }
+  body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 24px; box-sizing: border-box; color: var(--ink);
+    font: 17px/1.55 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+  main { max-width: 520px; text-align: center; }
+  .marca { display: block; margin-bottom: 28px; font: 500 26px 'Iowan Old Style', 'Palatino Linotype', Georgia, serif; letter-spacing: .14em; color: var(--sage-deep); }
+  h1 { font: 500 clamp(30px, 6vw, 42px)/1.1 'Iowan Old Style', 'Palatino Linotype', Georgia, serif; margin: 0 0 14px; text-wrap: balance; }
+  h1 span { color: var(--sage); }
+  p { margin: 0 0 28px; color: var(--ink-soft); text-wrap: pretty; }
+  .pilula { display: inline-flex; align-items: center; gap: 10px; min-height: 52px; padding: 0 26px; border-radius: 999px;
+    background: var(--sage-deep); color: var(--cream); font-weight: 650; text-decoration: none; transition: transform .2s, box-shadow .2s; }
+  .pilula:hover { transform: translateY(-1px); box-shadow: 0 14px 40px -10px rgba(51,61,43,.45); }
+  .pilula:focus-visible { outline: 3px solid var(--sage); outline-offset: 3px; }
+</style>
+</head>
+<body>
+<main>
+  <span class="marca" aria-label="SAVA">SAVA</span>
+  <h1>Abrindo a conversa <span>com a SAVA.</span></h1>
+  <p>Se o WhatsApp não abrir sozinho em alguns segundos, toque no botão.</p>
+  <!-- Sem target: é navegação na mesma aba, a única que o Chrome não captura. -->
+  <a class="pilula" id="ir" href="https://wa.me/5531984992474">Abrir o WhatsApp <span aria-hidden="true">→</span></a>
+</main>
+<script>
+(() => {
+  const NUMERO = '5531984992474'
+  const texto = (new URLSearchParams(location.search).get('text') || 'Oi, vim pelo site e quero falar com a SAVA.').slice(0, 1200)
+  const ua = navigator.userAgent
+  const naMao = /Android|iPhone|iPad|iPod|Mobile/i.test(ua) || (/Mac/.test(ua) && navigator.maxTouchPoints > 1)
+  const t = encodeURIComponent(texto)
+  /* No celular o wa.me abre o app. No computador, direto pro WhatsApp Web: o mesmo endereço dos botões do wa.me. */
+  const destino = naMao
+    ? `https://wa.me/${NUMERO}?text=${t}`
+    : `https://web.whatsapp.com/send/?phone=${NUMERO}&text=${t}&type=phone_number&app_absent=0`
+  document.getElementById('ir').href = destino
+  location.replace(destino)
+})()
+</script>
+</body>
+</html>

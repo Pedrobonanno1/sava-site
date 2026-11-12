@@ -1423,16 +1423,18 @@ de emitir</h1><div class="summary-card"><div class="summary-row"><div class="k">
   const $$ = (s) => [...document.querySelectorAll(s)]
   const quieto = matchMedia('(prefers-reduced-motion: reduce)').matches
 
-  /* WHATSAPP NO COMPUTADOR (12/11/2026; o mesmo conserto do site antigo, de 06/11): o wa.me mostra uma página
-     intermediária, e o "Continuar para o WhatsApp Web" dela só foca a aba do WhatsApp Web que já está aberta, sem abrir a
-     conversa com a SAVA. No celular o wa.me abre o app direto e fica; no computador todo link de WhatsApp vai direto pra
-     web.whatsapp.com/send, numa aba nova, que abre a conversa certa com a mensagem já escrita. */
+  /* WHATSAPP NO COMPUTADOR (12/11/2026, segunda tentativa; a primeira piorou). Quem tem o WhatsApp Web instalado como
+     app do Chrome não abre a conversa por link comum: o Chrome captura todo link que ABRE ABA NOVA em web.whatsapp.com
+     (o do wa.me e o direto) e só traz pra frente a janela já aberta, sem conversa. Navegação na MESMA aba não é
+     capturada. Então, no computador, todo botão de WhatsApp abre numa aba nova a NOSSA página /whatsapp.html, e é ela
+     que navega pra conversa com a SAVA (ver o comentário lá). No celular o wa.me abre o app direto e fica.
+     O número não vai no link do computador: /whatsapp.html só fala com a SAVA. */
   const naMao = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent) || (/Mac/.test(navigator.userAgent) && navigator.maxTouchPoints > 1)
   function linkDoZap(numero, texto) {
     const t = texto ? encodeURIComponent(texto) : ''
     return naMao
       ? `https://wa.me/${numero}${t ? '?text=' + t : ''}`
-      : `https://web.whatsapp.com/send?phone=${numero}${t ? '&text=' + t : ''}&type=phone_number&app_absent=0`
+      : `/whatsapp.html${t ? '?text=' + t : ''}`
   }
   if (!naMao) {
     for (const a of $$('a[href^="https://wa.me/"]')) {
