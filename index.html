@@ -1422,6 +1422,25 @@ de emitir</h1><div class="summary-card"><div class="summary-row"><div class="k">
   const $ = (s) => document.querySelector(s)
   const $$ = (s) => [...document.querySelectorAll(s)]
   const quieto = matchMedia('(prefers-reduced-motion: reduce)').matches
+
+  /* WHATSAPP NO COMPUTADOR (12/11/2026; o mesmo conserto do site antigo, de 06/11): o wa.me mostra uma página
+     intermediária, e o "Continuar para o WhatsApp Web" dela só foca a aba do WhatsApp Web que já está aberta, sem abrir a
+     conversa com a SAVA. No celular o wa.me abre o app direto e fica; no computador todo link de WhatsApp vai direto pra
+     web.whatsapp.com/send, numa aba nova, que abre a conversa certa com a mensagem já escrita. */
+  const naMao = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent) || (/Mac/.test(navigator.userAgent) && navigator.maxTouchPoints > 1)
+  function linkDoZap(numero, texto) {
+    const t = texto ? encodeURIComponent(texto) : ''
+    return naMao
+      ? `https://wa.me/${numero}${t ? '?text=' + t : ''}`
+      : `https://web.whatsapp.com/send?phone=${numero}${t ? '&text=' + t : ''}&type=phone_number&app_absent=0`
+  }
+  if (!naMao) {
+    for (const a of $$('a[href^="https://wa.me/"]')) {
+      const u = new URL(a.href)
+      a.href = linkDoZap(u.pathname.slice(1), u.searchParams.get('text'))
+      a.target = '_blank'; a.rel = 'noopener'
+    }
+  }
   const brl = (n, d = 2) => 'R$ ' + n.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d })
   const pct = (n, d = 1) => (n * 100).toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d }) + '%'
   const espera = (ms) => new Promise((r) => setTimeout(r, ms))
@@ -2016,7 +2035,7 @@ de emitir</h1><div class="summary-card"><div class="summary-row"><div class="k">
   function mensagemPraSava({ nome, telefone, especialidade, cnpj }) {
     const linhas = ['Oi! Vim pelo site da SAVA e quero falar com vocês.', '', `Nome: ${nome}`, `WhatsApp: ${telefone}`, `Especialidade: ${especialidade}`]
     if (cnpj) linhas.push(`CNPJ: ${CNPJ_TEXTO[cnpj] ?? cnpj}`)
-    return `https://wa.me/${SAVA_ZAP}?text=${encodeURIComponent(linhas.join('\n'))}`
+    return linkDoZap(SAVA_ZAP, linhas.join('\n'))
   }
   form.addEventListener('submit', async (ev) => {
     ev.preventDefault(); erro.hidden = true
