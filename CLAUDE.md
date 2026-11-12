@@ -8,7 +8,11 @@ menu (Emitir nota, Como funciona, Comparativo, Preços, Dúvidas), a seção Com
 colunas trazidos do site antigo, a pedido do Pedro. Tudo num `index.html` só, sem build.
 
 - As landings do anúncio (lp e lp2) vão ser apagadas pelo Pedro (11/11/2026): toda mudança é só aqui, sem
-  replicar nelas. As inscrições deste site chegam ao CRM com `de = "site"` (tabela `inscricoes` da SAVA Gestão).
+  replicar nelas.
+- **O contato é só pelo WhatsApp** (12/11/2026, pedido do Pedro): a seção do formulário saiu, e o site não grava
+  mais nada na tabela `inscricoes` da SAVA Gestão. Todo botão de "falar com a SAVA" abre a conversa; no computador,
+  pela ponte `/whatsapp.html`. Antes de mexer em qualquer botão de WhatsApp, ler e rodar
+  `ferramentas-app/whatsapp/` (o link comum quebra pra quem tem o WhatsApp Web instalado como app do Chrome).
 - O site antigo (React empacotado) está na tag `site-antigo-2026-11-11`.
 
 Antes de 05/11/2026 o site vivia num HTML único "empacotado" na Netlify (conta que ninguém achou); de

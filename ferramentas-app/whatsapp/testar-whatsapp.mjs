@@ -2,7 +2,8 @@
 // PWA), instala o WhatsApp Web como app com captura de links (como no computador do Pedro), deixa o app aberto e testa:
 //   VELHO: link direto pra web.whatsapp.com/send em aba nova  -> esperado: capturado, nenhuma aba com a conversa
 //   NOVO : botões do site (aba nova em /whatsapp.html, que navega sozinha) -> esperado: aba do navegador em /send
-// uso: node pwa-exp.mjs <log> <perfil> <site>
+// O formulário saiu do site em 12/11/2026; o teste cobre os botões.
+// uso: node testar-whatsapp.mjs <log> <perfil> <site>   (rodar pelo oculto.ps1)
 import { spawn } from 'node:child_process'
 import fs from 'node:fs'
 const [, , LOG, perfil, SITE] = process.argv
@@ -20,8 +21,6 @@ try {
     let i
     while ((i = buf.indexOf(0)) >= 0) {
       const m = JSON.parse(buf.subarray(0, i).toString('utf8')); buf = buf.subarray(i + 1)
-      // A gravação da inscrição no CRM é respondida aqui mesmo: nenhuma inscrição de teste chega ao banco.
-      if (m.method === 'Fetch.requestPaused') send('Fetch.fulfillRequest', { requestId: m.params.requestId, responseCode: 201, responseHeaders: [{ name: 'Access-Control-Allow-Origin', value: '*' }], body: '' }, m.sessionId)
       if (m.id && pend.has(m.id)) { pend.get(m.id)(m); pend.delete(m.id) }
     }
   })
@@ -63,7 +62,6 @@ try {
   const site = (await send('Target.createTarget', { url: SITE })).result.targetId
   const ss = await anexar(site); await espera(4000)
   await ev(ss, "document.documentElement.style.scrollBehavior='auto'")
-  await send('Fetch.enable', { patterns: [{ urlPattern: '*supabase.co/rest/v1/inscricoes*' }] }, ss)
 
   let antes = new Set((await paginas()).map((p) => p.targetId))
   log('\n=== VELHO: link direto pra web.whatsapp.com/send, aba nova (o que estava no ar)')
@@ -73,7 +71,13 @@ try {
   await fecharNovas(antes)
   await ev(ss, "document.querySelector('#velho').remove()")
 
-  for (const [nome, sel] of [['link "WhatsApp" do menu', "document.querySelector('.topo .zap-link')"], ['botão "Quero falar com a SAVA" do topo', "document.querySelector('.hero-acoes .pilula')"]]) {
+  const BOTOES = [
+    ['link "WhatsApp" do menu', "document.querySelector('.topo .zap-link')"],
+    ['botão "Quero a SAVA" do menu', "document.querySelector('.topo .pilula')"],
+    ['botão "Quero falar com a SAVA" do topo', "document.querySelector('.hero-acoes .pilula')"],
+    ['telefone do rodapé', "document.querySelector('.rodape-col a[href*=whatsapp]')"],
+  ]
+  for (const [nome, sel] of BOTOES) {
     antes = new Set((await paginas()).map((p) => p.targetId))
     log(`\n=== NOVO: ${nome}`)
     log('  aponta pra: ' + String(await clicar(ss, sel)).slice(0, 90)); await espera(8000)
@@ -81,11 +85,6 @@ try {
     await fecharNovas(antes); await espera(1000)
   }
 
-  antes = new Set((await paginas()).map((p) => p.targetId))
-  log('\n=== NOVO: formulário preenchido e enviado (gravação no CRM bloqueada no teste)')
-  await ev(ss, "(()=>{const f=document.querySelector('#form');f.elements.nome.value='Teste Claude';f.elements.whatsapp.value='(31) 99999-0000';f.elements.especialidade.value='Plantonista'})()")
-  await clicar(ss, "document.querySelector('#enviar')"); await espera(8000)
-  await foto('depois do envio', appId, antes)
   log('\nFIM')
   chrome.kill()
 } catch (e) { log('ERRO: ' + (e.stack || e)) }

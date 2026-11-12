@@ -30,8 +30,8 @@ verdade, em:
 
 1. um link direto pra `web.whatsapp.com/send` em aba nova (o jeito ERRADO) — esperado: nenhuma aba nova, o app parado
    em `https://web.whatsapp.com/`;
-2. o "WhatsApp" do menu, o "Quero falar com a SAVA" do topo e o formulário — esperado: uma `NOVA aba` em
+2. o "WhatsApp" e o "Quero a SAVA" do menu, o "Quero falar com a SAVA" do topo e o telefone do rodapé — esperado: uma `NOVA aba` em
    `https://web.whatsapp.com/send/?phone=5531984992474&text=...`.
 
-A gravação da inscrição no CRM é interceptada no teste: nenhuma inscrição falsa entra. O teste não loga no WhatsApp,
+O site não tem mais formulário (saiu em 12/11/2026): o contato é só pelos botões. O teste não loga no WhatsApp,
 então confere até a aba chegar no endereço da conversa; abrir o chat a partir daí é do próprio WhatsApp.

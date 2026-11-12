@@ -37,14 +37,13 @@
 
   VISUAL: o design system do app (lina-ui/design/design.md e lina-ui/handoff-landing/),
   pedido do Felipe em 26/10/2026 no lugar do "palco escuro" da apresentação. Creme como
-  fundo, sage-deep em duas seções de peso (como funciona e o formulário), serifa só em
+  fundo, sage-deep numa seção de peso (como funciona; a do formulário saiu em 12/11), serifa só em
   título, SAVA escrita na serifa como assinatura, sem mono, âmbar só onde é urgência ou
   a marca trabalhando. Paleta do app VERBATIM no primeiro :root.
 
-  FORMULÁRIO: grava na tabela `inscricoes` da SAVA Gestão (lina-gestao/supabase/
-  inscricoes.sql) e cai na caixa de entrada do CRM. `de` = `?de=` ou "anuncio:<utm_campaign>".
-  A chave `anon` é pública por desenho: só INSERE nas colunas do formulário. Na prévia
-  privada (previa.py → SAVA_PREVIA) nada é gravado.
+  CONTATO: só pelo WhatsApp. A seção do formulário ("Deixa o médico praticar a medicina") saiu em 12/11/2026, a
+  pedido do Pedro: o site não grava mais nada na tabela `inscricoes` da SAVA Gestão, e todo botão de "falar com a
+  SAVA" abre a conversa (no computador, pela ponte /whatsapp.html). O formulário antigo está no histórico do git.
 -->
 
 <style>
@@ -553,52 +552,6 @@ h3:not(.app-real *) { font-size: var(--t-card); line-height: 1.2; }
 .duvidas details[open] summary::after { content: "−"; }
 .duvidas details p { padding: 0 20px 18px; color: var(--texto-2); font-size: 14.5px; }
 
-/* ---------------------------------------------------------------- formulário (seção escura 2 de 2) */
-/* Os círculos translúcidos da carteirinha, parados, no lugar do brilho dourado: a cor cheia já é o peso. */
-.final { position: relative; overflow: hidden; }
-.final::before, .final::after { content: ""; position: absolute; border-radius: 50%; pointer-events: none; background: rgba(247,245,239,.05); }
-.final::before { width: 640px; height: 640px; right: -240px; top: -280px; }
-.final::after { width: 380px; height: 380px; left: -170px; bottom: -210px; background: rgba(247,245,239,.035); }
-.final .miolo { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 72px); align-items: center; }
-@media (max-width: 900px) { .final .miolo { grid-template-columns: minmax(0, 1fr); } }
-.final h2 { font-size: clamp(2rem, 4vw, 3rem); line-height: 1.1; }
-.form { display: grid; gap: 12px; }
-.campo { display: grid; gap: 6px; }
-.campo span { font-size: 13.5px; font-weight: 650; color: var(--texto); }
-.campo span em { font-style: normal; font-weight: 400; color: var(--texto-3); }
-/* Campo também é pílula (design.md, regra 4: "nem campo de formulário" escapa). */
-.campo input, .campo select {
-  width: 100%; min-height: 52px; padding: 0 18px; border-radius: 999px;
-  border: 1px solid var(--chip-border); background: var(--cream); color: var(--ink);
-  font-size: 16px; -webkit-appearance: none; appearance: none; transition: border-color .2s, box-shadow .2s;
-}
-.campo input::placeholder { color: var(--ink-soft); opacity: .8; }
-.campo input:focus, .campo select:focus { outline: none; border-color: var(--sage); box-shadow: 0 0 0 4px rgba(117,136,106,.18); }
-.campo select {
-  background-image: linear-gradient(45deg, transparent 50%, var(--ink-soft) 50%), linear-gradient(135deg, var(--ink-soft) 50%, transparent 50%);
-  background-position: calc(100% - 26px) 55%, calc(100% - 21px) 55%; background-size: 5px 5px; background-repeat: no-repeat; padding-right: 48px;
-}
-.campo select option { background: var(--white); }
-.campo input[aria-invalid="true"] { border-color: var(--amber); box-shadow: 0 0 0 4px rgba(185,138,68,.16); }
-.isca { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
-.form .pilula { width: 100%; margin-top: 6px; }
-.erro { background: var(--amber-tint); color: var(--amber-deep); border-radius: 14px; padding: 12px 16px; font-size: 14.5px; font-weight: 600; }
-.form-nota { font-size: 13px; color: var(--texto-3); text-align: center; }
-.form-nota a { color: var(--texto-2); text-decoration: underline; text-underline-offset: 2px; }
-.ou-zap { font-size: 14.5px; color: var(--texto-2); margin-top: 22px; }
-.ou-zap a { color: var(--texto); font-weight: 700; border-bottom: 1px solid var(--linha-forte); }
-.ou-zap a:hover { border-bottom-color: var(--texto); }
-/* A confirmação é o prêmio, então é ela que brilha (não o formulário): o selo verde de check do app, com halo. */
-.pronto { text-align: center; padding: 28px 8px; }
-.pronto .check {
-  width: 76px; height: 76px; border-radius: 50%; margin: 0 auto 22px; display: grid; place-items: center;
-  background: radial-gradient(circle at 35% 30%, var(--sage-light), var(--sage)); color: #233420; font-size: 34px; font-weight: 800;
-  box-shadow: 0 0 0 10px rgba(117,136,106,.14), 0 0 50px rgba(117,136,106,.45); animation: respira 4.5s ease-in-out infinite;
-}
-.pronto h3 { font-size: clamp(26px, 3vw, 34px); }
-.pronto p { color: var(--texto-2); margin-top: 12px; }
-.pronto .pilula { margin-top: 22px; }
-
 /* ---------------------------------------------------------------- rodapé e barra fixa */
 /* Rodapé do site oficial (11/11/2026), no desenho do site antigo: logo + frase, três colunas (navegação, contato,
    legal) e a faixa da razão social. O logo é o do site e do app: o traço de pulso dourado, com a linha do meio
@@ -994,7 +947,7 @@ main:focus { outline: none; }
     </nav>
     <div class="topo-acoes">
       <a class="zap-link" href="https://wa.me/5531984992474?text=Oi%2C%20vim%20pelo%20site%20e%20quero%20saber%20mais%20da%20SAVA." target="_blank" rel="noopener">WhatsApp</a>
-      <a class="pilula" href="#comecar">Quero a SAVA</a>
+      <a class="pilula" href="https://wa.me/5531984992474?text=Oi%2C%20vim%20pelo%20site%20e%20quero%20falar%20com%20a%20SAVA." target="_blank" rel="noopener">Quero a SAVA</a>
     </div>
   </div>
 </header>
@@ -1099,7 +1052,7 @@ main:focus { outline: none; }
   <!-- ================================================================ LEMA (skill sava-landing-page, B11) -->
   <!-- A frase de benefício grande, separada do hero. Começa apagada e acende palavra por palavra, em ordem de leitura,
        conforme a pessoa rola: é luz, não movimento. A frase é a da própria página (a descrição de compartilhamento);
-       "Deixa o médico praticar a medicina" já é o título do formulário e não se repete. -->
+       a outra frase forte, "Deixa o médico praticar a medicina", saiu junto com o formulário em 12/11/2026. -->
   <section class="faixa lema-cena" id="lema">
     <div class="miolo">
       <p class="lema-grande" id="lemaGrande">Você confere as notas e paga os boletos. <span class="luz">O resto é com a SAVA.</span></p>
@@ -1291,45 +1244,6 @@ main:focus { outline: none; }
     </div>
   </section>
 
-  <!-- ================================================================ FORMULÁRIO -->
-  <section class="cena faixa escura final" id="comecar">
-    <div class="miolo">
-      <div>
-        <p class="olho">Fale com a SAVA</p>
-        <h2>Deixa o médico praticar a medicina. <span class="luz">O resto, deixa com a gente.</span></h2>
-        <p class="lead">Preencha e o seu WhatsApp abre com a mensagem pronta pra SAVA. Um dos sócios responde pra entender o seu caso e mostrar o app. Sem fidelidade: você cancela quando quiser.</p>
-        <p class="ou-zap">Prefere chamar agora? <a href="https://wa.me/5531984992474?text=Oi%2C%20vim%20pelo%20site%20e%20quero%20saber%20mais%20da%20SAVA." target="_blank" rel="noopener">(31) 98499-2474</a> · seg a sex, 8h às 18h</p>
-      </div>
-
-      <div class="painel">
-        <div id="form-caixa">
-          <form class="form" id="form" novalidate>
-            <label class="campo"><span>Seu nome</span><input id="f-nome" name="nome" autocomplete="name" required maxlength="120"></label>
-            <label class="campo"><span>WhatsApp</span><input id="f-whatsapp" name="whatsapp" type="tel" inputmode="tel" autocomplete="tel" placeholder="(31) 99999 9999" required></label>
-            <label class="campo"><span>Especialidade ou momento da carreira</span><input id="f-especialidade" name="especialidade" required maxlength="80" placeholder="Plantonista · Residente de ortopedia"></label>
-            <label class="campo"><span>Você já tem CNPJ? <em>(opcional)</em></span>
-              <select id="f-cnpj" name="cnpj">
-                <option value="">Prefiro não dizer</option>
-                <option value="sim">Já tenho</option>
-                <option value="abrindo">Vou abrir nos próximos meses</option>
-                <option value="nao">Não tenho, sem previsão</option>
-              </select>
-            </label>
-            <div class="isca" aria-hidden="true"><input id="f-site" name="site" tabindex="-1" autocomplete="off"></div>
-            <p class="erro" id="erro" role="alert" hidden></p>
-            <button class="pilula" type="submit" id="enviar">Quero falar com a SAVA <span class="seta" aria-hidden="true">→</span></button>
-            <p class="form-nota">Só falamos com você sobre a SAVA. Pra sair, basta pedir na conversa. <a href="https://app.savatecnologia.com.br/privacidade" target="_blank" rel="noopener">Política de privacidade</a></p>
-          </form>
-        </div>
-        <div class="pronto" id="pronto" hidden tabindex="-1">
-          <div class="check" aria-hidden="true">✓</div>
-          <h3 id="pronto-titulo">Recebemos.</h3>
-          <p>O WhatsApp abriu com a sua mensagem pra SAVA: é só tocar em enviar. Se quiser adiantar, separe o CNPJ e o certificado digital da empresa.</p>
-          <a class="pilula" id="pronto-zap" href="https://wa.me/5531984992474" target="_blank" rel="noopener">Abrir o WhatsApp de novo <span class="seta" aria-hidden="true">→</span></a>
-        </div>
-      </div>
-    </div>
-  </section>
 </main>
 
 <footer class="rodape faixa">
@@ -1383,7 +1297,7 @@ main:focus { outline: none; }
 
 <!-- LGPD: o pixel da Meta só carrega depois do "Aceito" (ver o script). Sem ID de pixel, este cartão nunca aparece. -->
 <div class="consentimento" id="consentimento" role="dialog" aria-label="Pixel da Meta" hidden>
-  <p>Este site usa o pixel da Meta pra medir quem chega e quem se inscreve. Ele só liga se você aceitar. <a href="https://app.savatecnologia.com.br/privacidade" target="_blank" rel="noopener">Política de privacidade</a></p>
+  <p>Este site usa o pixel da Meta pra medir as visitas. Ele só liga se você aceitar. <a href="https://app.savatecnologia.com.br/privacidade" target="_blank" rel="noopener">Política de privacidade</a></p>
   <div class="consentimento-botoes"><button type="button" class="pilula mini" data-escolha="sim">Aceito</button><button type="button" class="pilula contorno mini" data-escolha="nao">Agora não</button></div>
 </div>
 
@@ -1414,9 +1328,8 @@ de emitir</h1><div class="summary-card"><div class="summary-row"><div class="k">
 
 <script>
 (() => {
-  const SUPABASE_URL = 'https://bssavikpitfzgolvymld.supabase.co'
-  const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJzc2F2aWtwaXRmemdvbHZ5bWxkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk2NzE0NTEsImV4cCI6MjEwNTI0NzQ1MX0.XRvvLxmsQv38Yhs7KQ93IaT_87-lWup7ZYCGMlxgY94'
-  /* Pixel da Meta: vazio = não carrega nada. Com o ID, a inscrição dispara "Lead". */
+  /* Pixel da Meta: vazio = não carrega nada. Com o ID, mede a visita (PageView). O "Lead" saía do formulário, que
+     saiu em 12/11/2026: quando o pixel for ligado, a conversão a marcar é o clique nos botões de WhatsApp. */
   const META_PIXEL_ID = ''
 
   const $ = (s) => document.querySelector(s)
@@ -1446,11 +1359,6 @@ de emitir</h1><div class="summary-card"><div class="summary-row"><div class="k">
   const brl = (n, d = 2) => 'R$ ' + n.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d })
   const pct = (n, d = 1) => (n * 100).toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d }) + '%'
   const espera = (ms) => new Promise((r) => setTimeout(r, ms))
-
-  const q = new URLSearchParams(location.search)
-  /* `de` diz de onde veio a inscrição: `?de=` manda; senão "site" (savatecnologia.com.br) + a campanha,
-     pra separar no CRM de quem veio pelas landings do anúncio (lp, lp2). */
-  const de = (q.get('de') || ['site', q.get('utm_campaign')].filter(Boolean).join(':')).slice(0, 40)
 
   /* LGPD (skill sava-landing-page, B10): o pixel só carrega depois do "Aceito". A escolha fica neste aparelho: sem
      escolha, o cartão aparece; "Agora não" vale até a pessoa limpar o navegador. Sem ID, nada disto acontece. */
@@ -1996,79 +1904,14 @@ de emitir</h1><div class="summary-card"><div class="summary-row"><div class="k">
     b.disabled = false
   })
 
-  /* ------------------------------------------------ barra fixa: só entre o hero e o formulário */
+  /* ------------------------------------------------ barra fixa: aparece depois que os botões do topo saem da tela */
   const barra = $('#barra')
   if ('IntersectionObserver' in window) {
     const vis = new Map()
     const io = new IntersectionObserver((es) => { es.forEach((e) => vis.set(e.target, e.isIntersecting)); barra.classList.toggle('some', [...vis.values()].some(Boolean)) }, { threshold: .1 })
-    io.observe($('.hero-acoes')); io.observe($('#comecar'))
+    io.observe($('.hero-acoes'))
   }
 
-  /* ------------------------------------------------ formulário — mesmas regras de lina-gestao/src/services/inscricoes.js */
-  function numeroWhatsApp(v) {
-    const d = String(v || '').replace(/\D/g, '')
-    if (d.length === 12 || d.length === 13) return d.startsWith('55') ? d : null
-    if (d.length === 10 || d.length === 11) return '55' + d
-    return null
-  }
-  function primeiroNome(nome) {
-    const p = String(nome).trim().split(/\s+/).filter((x) => !/^dr[a.]?\.?$/i.test(x))
-    return p[0] || nome
-  }
-  const form = $('#form'), erro = $('#erro'), botao = $('#enviar'), rotuloBotao = botao.innerHTML
-  function mostrarErro(texto, campo) {
-    erro.textContent = texto; erro.hidden = false
-    form.querySelectorAll('[aria-invalid]').forEach((el) => el.removeAttribute('aria-invalid'))
-    if (campo) { campo.setAttribute('aria-invalid', 'true'); campo.focus() }
-  }
-  function pronto(nome, zap) {
-    $('#form-caixa').hidden = true
-    $('#pronto-titulo').textContent = `Recebemos, ${primeiroNome(nome)}.`
-    if (zap) $('#pronto-zap').href = zap
-    const p = $('#pronto'); p.hidden = false; p.focus()
-  }
-  /* O ENVIO VAI PRO WHATSAPP DA SAVA (Pedro, 12/11/2026: "quando preencherem e enviarem, quero que envie direto ao wpp
-     da SAVA"). O WhatsApp da pessoa abre com a mensagem já escrita com o que ela preencheu; ela só toca em enviar. A
-     inscrição continua indo pro CRM (e o aviso por e-mail aos sócios sai dela), pra ninguém se perder se ela fechar o
-     WhatsApp sem mandar. A janela abre AINDA no toque, antes de qualquer espera: aberta depois de um await, o
-     navegador bloqueia como pop-up. Bloqueada mesmo assim, a página vai pro WhatsApp quando a gravação termina. */
-  const SAVA_ZAP = '5531984992474'
-  const CNPJ_TEXTO = { sim: 'já tenho', abrindo: 'vou abrir nos próximos meses', nao: 'não tenho, sem previsão' }
-  function mensagemPraSava({ nome, telefone, especialidade, cnpj }) {
-    const linhas = ['Oi! Vim pelo site da SAVA e quero falar com vocês.', '', `Nome: ${nome}`, `WhatsApp: ${telefone}`, `Especialidade: ${especialidade}`]
-    if (cnpj) linhas.push(`CNPJ: ${CNPJ_TEXTO[cnpj] ?? cnpj}`)
-    return linkDoZap(SAVA_ZAP, linhas.join('\n'))
-  }
-  form.addEventListener('submit', async (ev) => {
-    ev.preventDefault(); erro.hidden = true
-    const f = form.elements
-    const nome = f.nome.value.trim(), whatsapp = numeroWhatsApp(f.whatsapp.value), especialidade = f.especialidade.value.trim()
-    if (nome.length < 2) return mostrarErro('Falta o seu nome.', f.nome)
-    if (!whatsapp) return mostrarErro('Esse WhatsApp parece incompleto. Coloca com o DDD.', f.whatsapp)
-    if (!especialidade) return mostrarErro('Falta a especialidade ou o momento da carreira.', f.especialidade)
-    if (f.site.value) return pronto(nome) /* robô: finge que deu certo, não grava e não abre o WhatsApp */
-
-    const zap = mensagemPraSava({ nome, telefone: f.whatsapp.value.trim(), especialidade, cnpj: f.cnpj.value })
-    const janela = window.open(zap, '_blank')
-    if (janela) janela.opener = null
-    if (window.fbq) fbq('track', 'Lead')
-
-    botao.disabled = true; botao.textContent = 'Abrindo o WhatsApp…'
-    /* Na prévia privada (previa.py) nada é gravado: o formulário só mostra o caminho. */
-    if (window.SAVA_PREVIA) { await espera(600); return pronto(nome, zap) }
-    try {
-      const r = await fetch(`${SUPABASE_URL}/rest/v1/inscricoes`, {
-        method: 'POST', keepalive: true,
-        headers: { apikey: SUPABASE_ANON, Authorization: `Bearer ${SUPABASE_ANON}`, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
-        body: JSON.stringify({ nome: nome.slice(0, 120), whatsapp, especialidade: especialidade.slice(0, 80), cnpj: f.cnpj.value || null, de: de || null }),
-      })
-      if (!r.ok) throw new Error(String(r.status))
-    } catch {
-      /* Não gravou, mas a mensagem com os dados já está no WhatsApp dela: o contato chega do mesmo jeito. */
-    }
-    pronto(nome, zap)
-    if (!janela) location.href = zap
-  })
 })()
 </script>
 </body>
