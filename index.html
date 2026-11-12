@@ -597,6 +597,7 @@ h3:not(.app-real *) { font-size: var(--t-card); line-height: 1.2; }
 }
 .pronto h3 { font-size: clamp(26px, 3vw, 34px); }
 .pronto p { color: var(--texto-2); margin-top: 12px; }
+.pronto .pilula { margin-top: 22px; }
 
 /* ---------------------------------------------------------------- rodapé e barra fixa */
 /* Rodapé do site oficial (11/11/2026), no desenho do site antigo: logo + frase, três colunas (navegação, contato,
@@ -1296,7 +1297,7 @@ main:focus { outline: none; }
       <div>
         <p class="olho">Fale com a SAVA</p>
         <h2>Deixa o médico praticar a medicina. <span class="luz">O resto, deixa com a gente.</span></h2>
-        <p class="lead">Deixe seu contato. Um dos sócios te chama no WhatsApp pra entender o seu caso e mostrar o app. Sem fidelidade: você cancela quando quiser.</p>
+        <p class="lead">Preencha e o seu WhatsApp abre com a mensagem pronta pra SAVA. Um dos sócios responde pra entender o seu caso e mostrar o app. Sem fidelidade: você cancela quando quiser.</p>
         <p class="ou-zap">Prefere chamar agora? <a href="https://wa.me/5531984992474?text=Oi%2C%20vim%20pelo%20site%20e%20quero%20saber%20mais%20da%20SAVA." target="_blank" rel="noopener">(31) 98499-2474</a> · seg a sex, 8h às 18h</p>
       </div>
 
@@ -1323,7 +1324,8 @@ main:focus { outline: none; }
         <div class="pronto" id="pronto" hidden tabindex="-1">
           <div class="check" aria-hidden="true">✓</div>
           <h3 id="pronto-titulo">Recebemos.</h3>
-          <p>Um dos sócios te chama no WhatsApp em breve. Se quiser adiantar, separe o CNPJ e o certificado digital da empresa.</p>
+          <p>O WhatsApp abriu com a sua mensagem pra SAVA: é só tocar em enviar. Se quiser adiantar, separe o CNPJ e o certificado digital da empresa.</p>
+          <a class="pilula" id="pronto-zap" href="https://wa.me/5531984992474" target="_blank" rel="noopener">Abrir o WhatsApp de novo <span class="seta" aria-hidden="true">→</span></a>
         </div>
       </div>
     </div>
@@ -1998,10 +2000,23 @@ de emitir</h1><div class="summary-card"><div class="summary-row"><div class="k">
     form.querySelectorAll('[aria-invalid]').forEach((el) => el.removeAttribute('aria-invalid'))
     if (campo) { campo.setAttribute('aria-invalid', 'true'); campo.focus() }
   }
-  function pronto(nome) {
+  function pronto(nome, zap) {
     $('#form-caixa').hidden = true
     $('#pronto-titulo').textContent = `Recebemos, ${primeiroNome(nome)}.`
+    if (zap) $('#pronto-zap').href = zap
     const p = $('#pronto'); p.hidden = false; p.focus()
+  }
+  /* O ENVIO VAI PRO WHATSAPP DA SAVA (Pedro, 12/11/2026: "quando preencherem e enviarem, quero que envie direto ao wpp
+     da SAVA"). O WhatsApp da pessoa abre com a mensagem já escrita com o que ela preencheu; ela só toca em enviar. A
+     inscrição continua indo pro CRM (e o aviso por e-mail aos sócios sai dela), pra ninguém se perder se ela fechar o
+     WhatsApp sem mandar. A janela abre AINDA no toque, antes de qualquer espera: aberta depois de um await, o
+     navegador bloqueia como pop-up. Bloqueada mesmo assim, a página vai pro WhatsApp quando a gravação termina. */
+  const SAVA_ZAP = '5531984992474'
+  const CNPJ_TEXTO = { sim: 'já tenho', abrindo: 'vou abrir nos próximos meses', nao: 'não tenho, sem previsão' }
+  function mensagemPraSava({ nome, telefone, especialidade, cnpj }) {
+    const linhas = ['Oi! Vim pelo site da SAVA e quero falar com vocês.', '', `Nome: ${nome}`, `WhatsApp: ${telefone}`, `Especialidade: ${especialidade}`]
+    if (cnpj) linhas.push(`CNPJ: ${CNPJ_TEXTO[cnpj] ?? cnpj}`)
+    return `https://wa.me/${SAVA_ZAP}?text=${encodeURIComponent(linhas.join('\n'))}`
   }
   form.addEventListener('submit', async (ev) => {
     ev.preventDefault(); erro.hidden = true
@@ -2010,24 +2025,28 @@ de emitir</h1><div class="summary-card"><div class="summary-row"><div class="k">
     if (nome.length < 2) return mostrarErro('Falta o seu nome.', f.nome)
     if (!whatsapp) return mostrarErro('Esse WhatsApp parece incompleto. Coloca com o DDD.', f.whatsapp)
     if (!especialidade) return mostrarErro('Falta a especialidade ou o momento da carreira.', f.especialidade)
-    if (f.site.value) return pronto(nome) /* robô: finge que deu certo e não grava */
+    if (f.site.value) return pronto(nome) /* robô: finge que deu certo, não grava e não abre o WhatsApp */
 
-    botao.disabled = true; botao.textContent = 'Enviando…'
+    const zap = mensagemPraSava({ nome, telefone: f.whatsapp.value.trim(), especialidade, cnpj: f.cnpj.value })
+    const janela = window.open(zap, '_blank')
+    if (janela) janela.opener = null
+    if (window.fbq) fbq('track', 'Lead')
+
+    botao.disabled = true; botao.textContent = 'Abrindo o WhatsApp…'
     /* Na prévia privada (previa.py) nada é gravado: o formulário só mostra o caminho. */
-    if (window.SAVA_PREVIA) { await espera(600); return pronto(nome) }
+    if (window.SAVA_PREVIA) { await espera(600); return pronto(nome, zap) }
     try {
       const r = await fetch(`${SUPABASE_URL}/rest/v1/inscricoes`, {
-        method: 'POST',
+        method: 'POST', keepalive: true,
         headers: { apikey: SUPABASE_ANON, Authorization: `Bearer ${SUPABASE_ANON}`, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
         body: JSON.stringify({ nome: nome.slice(0, 120), whatsapp, especialidade: especialidade.slice(0, 80), cnpj: f.cnpj.value || null, de: de || null }),
       })
       if (!r.ok) throw new Error(String(r.status))
-      if (window.fbq) fbq('track', 'Lead')
-      pronto(nome)
     } catch {
-      botao.disabled = false; botao.innerHTML = rotuloBotao
-      mostrarErro('Não deu pra enviar agora. Tenta de novo em um minuto, ou chama no WhatsApp (31) 98499-2474.')
+      /* Não gravou, mas a mensagem com os dados já está no WhatsApp dela: o contato chega do mesmo jeito. */
     }
+    pronto(nome, zap)
+    if (!janela) location.href = zap
   })
 })()
 </script>
