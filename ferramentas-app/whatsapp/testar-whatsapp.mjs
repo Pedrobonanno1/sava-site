@@ -73,7 +73,7 @@ try {
 
   const BOTOES = [
     ['link "WhatsApp" do menu', "document.querySelector('.topo .zap-link')"],
-    ['botão "Quero a SAVA" do menu', "document.querySelector('.topo .pilula')"],
+    ['botão "Quero a SAVA" do menu', "document.querySelector('.topo-acoes .pilula')"],
     ['botão "Quero falar com a SAVA" do topo', "document.querySelector('.hero-acoes .pilula')"],
     ['telefone do rodapé', "document.querySelector('.rodape-col a[href*=whatsapp]')"],
   ]

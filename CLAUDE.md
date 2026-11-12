@@ -9,6 +9,8 @@ colunas trazidos do site antigo, a pedido do Pedro. Tudo num `index.html` só, s
 
 - As landings do anúncio (lp e lp2) vão ser apagadas pelo Pedro (11/11/2026): toda mudança é só aqui, sem
   replicar nelas.
+- **No celular** o site tem topo de uma linha com botão de menu, desenho do "Como funciona" em pé, conferência em duas
+  linhas, carrossel dos 4 passos e rodapé compacto (12/11/2026). Onde mora cada coisa e como testar: `ferramentas-app/celular/`.
 - **O contato é só pelo WhatsApp** (12/11/2026, pedido do Pedro): a seção do formulário saiu, e o site não grava
   mais nada na tabela `inscricoes` da SAVA Gestão. Todo botão de "falar com a SAVA" abre a conversa; no computador,
   pela ponte `/whatsapp.html`. Antes de mexer em qualquer botão de WhatsApp, ler e rodar
